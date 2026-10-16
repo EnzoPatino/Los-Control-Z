@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
       features: [
         { id: '01', name: 'Funcionalidad', desc: 'Idoneidad, precisión, interoperabilidad y seguridad de acceso.' },
         { id: '02', name: 'Fiabilidad', desc: 'Madurez del sistema, tolerancia a fallos y capacidad de recuperación.' },
-        { id: '03', name: 'Usabilidad', desc: 'Facilidad de comprensión, aprendizaje, operabilidad y tracción de uso.' },
+        { id: '03', name: 'Usabilidad', desc: 'Facilidad de comprensión, aprendizaje y operación, además del atractivo para quien usa el producto.' },
         { id: '04', name: 'Eficiencia', desc: 'Comportamiento en el tiempo y uso óptimo de recursos computacionales.' },
         { id: '05', name: 'Mantenibilidad', desc: 'Capacidad de análisis, modificabilidad, estabilidad y testeabilidad.' },
         { id: '06', name: 'Portabilidad', desc: 'Adaptabilidad, facilidad de instalación, coexistencia y reemplazabilidad.' }
