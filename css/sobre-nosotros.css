@@ -36,3 +36,7 @@
 @media(max-width:360px){.about-home{display:none}.about-brand small{max-width:190px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
 
 .about-mark { object-fit: cover; border-radius: 50%; background: transparent; }
+.about-avatar{display:block;width:54px;height:54px;flex:none;overflow:hidden;border-radius:16px;background:#eeebff;box-shadow:0 0 0 1px #d9d2ff;transition:transform .22s ease,box-shadow .22s ease}
+.about-avatar svg{display:block;width:100%;height:100%}
+.about-avatar .avatar-bg{fill:#e9e5ff}.about-avatar .avatar-skin{fill:#d99b76}.about-avatar .avatar-neck{fill:#c98561}.about-avatar .avatar-hair{fill:#27314e}.about-avatar .avatar-shirt{fill:#6250dc}.about-avatar .avatar-line{fill:none;stroke:#333049;stroke-linecap:round;stroke-width:1.5}.about-avatar .avatar-detail{fill:none;stroke:#fff;stroke-linecap:round;stroke-width:2}.about-avatar .avatar-glasses{fill:none;stroke:#29304b;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.6}
+.avatar-dev .avatar-bg{fill:#dcecff}.avatar-dev .avatar-shirt{fill:#3974a7}.avatar-design .avatar-bg{fill:#f7e5dc}.avatar-design .avatar-shirt{fill:#bd694f}.avatar-design .avatar-hair{fill:#503b34}.avatar-test .avatar-bg{fill:#ddf1e9}.avatar-test .avatar-shirt{fill:#32836b}.avatar-test .avatar-hair{fill:#343b40}.about-member:hover .about-avatar,.about-member:focus-within .about-avatar{transform:translateY(-2px) rotate(-3deg);box-shadow:0 0 0 2px #b8adff,0 7px 15px #080e2030}
