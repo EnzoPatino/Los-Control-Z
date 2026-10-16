@@ -5,7 +5,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // --- Especificación técnica de las Normas ISO (Sin emojis) ---
+  // Especificación de las normas ISO
   const ISO_DATA = {
     iso9126: {
       badge: 'NORMA HISTÓRICA FUNDACIONAL',
