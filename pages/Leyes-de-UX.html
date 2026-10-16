@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leyes de UX aplicadas — Control Z · SGCS 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/scroll-reveal.css">
+<style>
+  :root{
+    --paper:#e6edf8; --paper-2:#dae4f3; --card:#ffffff; --ink:#1a1a35; --ink-soft:#2f2f52;
+    --muted:#5b5b7c; --line:#ccd9ea; --pine:#29295e; --pine-deep:#1c1c46;
+    --gold:#f43f5e; --gold-deep:#be123c;
+    --mono:'IBM Plex Mono',monospace; --sans:'Space Grotesk',sans-serif; --serif:'Fraunces',serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--paper);color:var(--body,var(--ink-soft));font-family:var(--sans);line-height:1.6;font-size:1rem}
+  .wrap{max-width:960px;margin:0 auto;padding:60px clamp(20px,5vw,48px) 80px}
+  header.doc{border-bottom:2px solid var(--ink);padding-bottom:28px;margin-bottom:8px}
+  .doc-eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .doc-eyebrow::before{content:"";width:44px;height:3px;background:var(--gold);border-radius:2px}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(2rem,5vw,3rem);line-height:1.05;color:var(--ink)}
+  .doc-sub{color:var(--muted);margin-top:14px;font-size:1.02rem}
+  .doc-meta{display:flex;flex-wrap:wrap;gap:18px;margin-top:22px;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+  .doc-meta b{color:var(--ink-soft)}
+
+  .intro{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pine);border-radius:8px;padding:22px 26px;margin:34px 0}
+  .intro p{color:var(--ink-soft)}
+  .intro a{color:var(--gold-deep);font-weight:500}
+
+  h2.sec{font-family:var(--serif);font-size:1.6rem;font-weight:500;color:var(--ink);margin:46px 0 6px;display:flex;align-items:center;gap:14px}
+  h2.sec::before{content:"";width:34px;height:3px;background:var(--gold);border-radius:2px}
+  .sec-notes{color:var(--muted);font-family:var(--mono);font-size:.74rem;margin-bottom:22px}
+
+  .laws{display:grid;gap:18px}
+  .law{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:24px 26px;display:grid;grid-template-columns:70px 1fr;gap:20px}
+  .law .n{font-family:var(--serif);font-weight:500;font-size:2rem;color:var(--pine)}
+  .law h3{color:var(--ink);font-weight:700;font-size:1.12rem}
+  .law .en{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);margin:2px 0 8px}
+  .law .habilita{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:12px}
+  .law p{color:var(--ink-soft);font-size:.96rem}
+  .law .how{background:var(--paper-2);border-radius:8px;padding:12px 16px;margin-top:12px}
+  .law .how b{color:var(--ink)}
+  .law a.src{color:var(--gold-deep);text-decoration:none;border-bottom:1px solid var(--line)}
+  .law a.src:hover{border-color:var(--gold)}
+
+  .table-wrap{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:8px}
+  table{width:100%;border-collapse:collapse;font-size:.9rem}
+  th{background:var(--pine);color:#eef3fc;text-align:left;padding:12px 16px;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
+  td{padding:12px 16px;border-top:1px solid var(--line);color:var(--ink-soft);vertical-align:top}
+  td:first-child{font-weight:700;color:var(--ink);white-space:nowrap}
+
+  footer.ley{padding:28px 0 0;border-top:1px solid var(--line);margin-top:46px;font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+  @media (max-width:640px){.law{grid-template-columns:1fr;gap:6px}.law .n{font-size:1.5rem}}
+  @media print{body{background:#fff}.law{page-break-inside:avoid}.wrap{padding:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="doc">
+    <div style="margin-bottom: 16px;">
+      <a href="../index.html" style="text-decoration:none; color:var(--pine); font-family:var(--mono); font-size:.78rem; font-weight:600; display:inline-flex; align-items:center; gap:6px;">← Volver al inicio</a>
+    </div>
+    <p class="doc-eyebrow">Documentación del diseño</p>
+    <h1>Leyes de UX aplicadas<br>en la página de inicio</h1>
+    <p class="doc-sub">Justificación de cada decisión de diseño de <b>Control Z</b> — Sistema de Gestión de Calidad del Software — tomando como marco de referencia las leyes documentadas en <b>lawsofux.com</b>, según lo indicado por la cátedra.</p>
+    <div class="doc-meta">
+      <span><b>Equipo:</b> Los Control Z</span>
+      <span><b>Proyecto:</b> SGCS 2026</span>
+      <span><b>Sección:</b> Inicio / Index</span>
+      <span><b>Documento:</b> Leyes-de-UX</span>
+    </div>
+  </header>
+
+  <div class="intro">
+    <p>El <b>índice de la página de inicio</b> (hero, menú de navegación, tarjetas de secciones, contador de recursos, banda de acción y pie de página) fue diseñado siguiendo las leyes de la experiencia de usuario del sitio <a href="https://lawsofux.com/" target="_blank" rel="noopener noreferrer">lawsofux.com</a>. A continuación se documenta qué ley aplica, qué dice y cómo se implementó en la página.</p>
+  </div>
+
+  <h2 class="sec">Leyes aplicadas al diseño</h2>
+  <p class="sec-notes">10 leyes · fuente: lawsofux.com</p>
+
+  <div class="laws">
+    <div class="law">
+      <div class="n">01</div>
+      <div>
+        <h3>Ley de Hick (Hick's Law)</h3>
+        <p class="en"><a class="src" href="https://lawsofux.com/hicks-law/" target="_blank" rel="noopener noreferrer">lawsofux.com/hicks-law</a></p>
+        <p>El tiempo que tarda una persona en tomar una decisión aumenta con el número y la complejidad de las opciones.</p>
+        <p class="habilita">Aplicación</p>
+        <div class="how"><p><b>Foco en una sola acción por pantalla:</b> el hero ofrece 1 CTA primario ("Comenzar el recorrido") + 1 secundario. El índice muestra 5 tarjetas y no más (5 opciones = decisión rápida). El menú agrupa los enlaces en ≤5 secciones.</p></div>
+      </div>
+    </div>
+
+    <div class="law">
+      <div class="n">02</div>
+      <div>
+        <h3>Ley de Fitts (Fitts's Law)</h3>
+        <p class="en"><a class="src" href="https://lawsofux.com/fittss-law/" target="_blank" rel="noopener noreferrer">lawsofux.com/fittss-law</a></p>
+        <p>El tiempo para alcanzar un objetivo depende del tamaño del objetivo y de la distancia hasta él.</p>
+        <p class="habilita">Aplicación</p>
+        <div class="how"><p><b>Blancos táctiles grandes y accesibles:</b> botones de 44–48 px de alto, menú hamburguesa de 46 px, zona de enlaces de navegación amplia, y CTA "Encuesta" ubicado en la esquina superior derecha (zona natural de acción del pulgar/click).</p></div>
+      </div>
+    </div>
+
+    <div class="law">
+      <div class="n">03</div>
+      <div>
+        <h3>Ley de Jakob (Jakob's Law)</h3>
+        <p class="en"><a class="src" href="https://lawsofux.com/jakobs-law/" target="_blank" rel="noopener noreferrer">lawsofux.com/jakobs-law</a></p>
+        <p>Las personas pasan la mayor parte del tiempo usando otros sitios; esperan que el nuestro funcione igual que los que ya conocen.</p>
+        <p class="habilita">Aplicación</p>
+        <div class="how"><p><b>Patrones familiares:</b> header fijo con logo a la izquierda, menú hamburguesa a la derecha, índice en tarjetas clásicas, footer con columnas de enlaces y copyright. Nada inventado en la navegación.</p></div>
+      </div>
+    </div>
+
+    <div class="law">
+      <div class="n">04</div>
+      <div>
+        <h3>Ley de Miller (Miller's Law)</h3>
+        <p class="en"><a class="src" href="https://lawsofux.com/millers-law/" target="_blank" rel="noopener noreferrer">lawsofux.com/millers-law</a></p>
+        <p>La memoria de trabajo retiene entre 5 y 9 unidades de información (7 ± 2).</p>
+        <p class="habilita">Aplicación</p>
+        <div class="how"><p><b>Contenido fragmentado en grupos de 7 ± 2:</b> 5 secciones numeradas (01–05), 5 etiquetas temáticas en el hero, 4 estadísticas y 3 columnas de footer. El contenido se organiza en "chunks" numerados y agrupados.</p></div>
+      </div>
+    </div>
+
+    <div class="law">
+      <div class="n">05</div>
+      <div>
+        <h3>Ley de la Proximidad (Law of Proximity)</h3>
+        <p class="en"><a class="src" href="https://www.interaction-design.org/literature/article/the-law-of-proximity-provides-a-framework-for-grouping-related-elements" target="_blank" rel="noopener noreferrer">Principios de Gestalt</a></p>
+        <p>Los elementos cercanos entre sí se perciben como relacionados.</p>
+        <p class="habilita">Aplicación</p>
+        <div class="how"><p><b>Relación visual inmediata:</b> cada tarjeta reagrupa número + título + descripción + enlace en un bloque cerrado; las etiquetas del hero están junto a su concepto; los enlaces del footer quedan agrupados por columna temática.</p></div>
+      </div>
+    </div>
+
+    <div class="law">
+      <div class="n">06</div>
+      <div>
+        <h3>Ley de la Región Común (Law of Common Region)</h3>
+        <p class="en"><a class="src" href="https://www.nngroup.com/articles/gestalt-common-region/" target="_blank" rel="noopener noreferrer">NNGroup / Principios de Gestalt</a></p>
+        <p>Los elementos contenidos dentro de una misma región se perciben como un grupo.</p>
+        <p class="habilita">Aplicación</p>
+        <div class="how"><p><b>Tarjetas y paneles con borde, fondo y sombra:</b> las secciones del índice viven en tarjetas blancas sobre fondo azulado; el panel del hero ("Una guía, cuatro ejes") y la banda CTA crean regiones claramente delimitadas que orientan la lectura.</p></div>
+      </div>
+    </div>
+
+    <div class="law">
+      <div class="n">07</div>
+      <div>
+        <h3>Efecto Estética-Usabilidad (Aesthetic-Usability Effect)</h3>
+        <p class="en"><a class="src" href="https://lawsofux.com/aesthetic-usability-effect/" target="_blank" rel="noopener noreferrer">lawsofux.com/aesthetic-usability-effect</a></p>
+        <p>Un diseño estéticamente agradable se percibe como más fácil de usar, incluso si no lo es.</p>
+        <p class="habilita">Aplicación</p>
+        <div class="how"><p><b>Sistema visual coherente:</b> tipografía editorial (Fraunces) con grotesca técnica (Space Grotesk) y monoespaciada para etiquetas; paleta azul/blanca/ámbar consistente; grano sutil de papel y micro-detalles que generan confianza y profesionalismo.</p></div>
+      </div>
+    </div>
+
+    <div class="law">
+      <div class="n">08</div>
+      <div>
+        <h3>Ley/Práctica de la Proporción de la Línea de Gol (Goal-Gradient Effect)</h3>
+        <p class="en"><a class="src" href="https://lawsofux.com/goal-gradient-effect/" target="_blank" rel="noopener noreferrer">lawsofux.com/goal-gradient-effect</a></p>
+        <p>Las personas se acercan a la meta con más motivación cuanto más cerca están de alcanzarla.</p>
+        <p class="habilita">Aplicación</p>
+        <div class="how"><p><b>Trayectos con meta visible:</b> la encuesta metodológica es un asistente paso a paso con barra de progreso; los CTAs conducen a una acción concreta ("Hacer la encuesta", "Probar el comparador") que promete un resultado cerrado.</p></div>
+      </div>
+    </div>
+
+    <div class="law">
+      <div class="n">09</div>
+      <div>
+        <h3>Umbral de Doherty (Doherty Threshold)</h3>
+        <p class="en"><a class="src" href="https://lawsofux.com/doherty-threshold/" target="_blank" rel="noopener noreferrer">lawsofux.com/doherty-threshold</a></p>
+        <p>La productividad mejora cuando el sistema responde a la interacción en menos de 400 ms.</p>
+        <p class="habilita">Aplicación</p>
+        <div class="how"><p><b>Feedback inmediato:</b> el menú hamburguesa se abre y cierra al instante, las tarjetas reaccionan al hover (elevación, flecha que se desplaza), y un script resalta la sección activa mientras el usuario hace scroll.</p></div>
+      </div>
+    </div>
+
+    <div class="law">
+      <div class="n">10</div>
+      <div>
+        <h3>Efecto Pico-Fin (Peak-End Rule)</h3>
+        <p class="en"><a class="src" href="https://lawsofux.com/peak-end-rule/" target="_blank" rel="noopener noreferrer">lawsofux.com/peak-end-rule</a></p>
+        <p>Las personas juzgan una experiencia por el momento más intenso (pico) y por el final, no por el promedio.</p>
+        <p class="habilita">Aplicación</p>
+        <div class="how"><p><b>Pico al inicio y cierre definido al final:</b> el hero (titular + panel con logo + CTA) es el momento de máximo impacto; la página termina en la banda oscura "Comparador y encuesta" con llamados a la acción claros, dejando una impresión de utilidad inmediata.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sec">Resumen de aplicación por artefacto</h2>
+  <p class="sec-notes">Mapa de cada elemento del index → leyes que lo justifican</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Elemento</th><th>Leyes aplicadas</th></tr>
+      <tr><td>Header / navegación</td><td>Jakob's Law, Fitts's Law, Doherty Threshold</td></tr>
+      <tr><td>Hero (titular + panel + CTA)</td><td>Peak-End Rule, Hick's Law, Aesthetic-Usability Effect</td></tr>
+      <tr><td>Índice con 5 tarjetas (01–05)</td><td>Miller's Law, Hick's Law, Common Region, Proximity</td></tr>
+      <tr><td>Menú hamburguesa</td><td>Fitts's Law, Jakob's Law</td></tr>
+      <tr><td>Banda de estadísticas</td><td>Miller's Law, Proximity</td></tr>
+      <tr><td>Banda CTA final</td><td>Goal-Gradient Effect, Peak-End Rule</td></tr>
+      <tr><td>Footer en columnas</td><td>Jakob's Law, Proximity, Common Region</td></tr>
+      <tr><td>Scroll con sección activa</td><td>Doherty Threshold, Law of Orientation</td></tr>
+    </table>
+  </div>
+
+  <footer class="ley">
+    <span>© 2026 Los Control Z</span>
+    <span><a href="../index.html" style="color:inherit; text-decoration:none;">← Volver al inicio</a></span>
+    <span>Referencia: lawsofux.com</span>
+    <span>Proyecto SGCS 2026</span>
+  </footer>
+</div>
+<script src="../js/scroll-reveal.js"></script>
+</body>
+</html>

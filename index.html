@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control Z — Calidad de Software, sin humo | Proyecto SGCS</title>
+  <meta name="description" content="Un sitio educativo y práctico sobre gestión de calidad de software y procesos de desarrollo. Conceptos clave, metodologías ágiles y buenas prácticas.">
+
+  <!-- Google Fonts: Fraunces (Editorial Serif) + Plus Jakarta Sans (Clean Modern Sans) + IBM Plex Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Hoja de estilos principal -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/scroll-reveal.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       HEADER / NAVEGACIÓN SUPERIOR
+       ======================================================================== -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-container">
+      <!-- Marca: Avatar Cz + Texto -->
+      <a href="#hero" class="brand" aria-label="Control Z - Inicio">
+        <div class="brand-avatar" aria-hidden="true">Cz</div>
+        <div class="brand-text">
+          <span class="brand-title">CONTROL Z</span>
+          <span class="brand-subtitle">SISTEMA DE GESTIÓN Y CALIDAD DE SOFTWARE</span>
+        </div>
+      </a>
+
+      <!-- Botón Hamburguesa: abre el menú de navegación completo -->
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="siteMenu" aria-label="Abrir menú de navegación">
+        <span class="menu-toggle-line" aria-hidden="true"></span>
+        <span class="menu-toggle-line" aria-hidden="true"></span>
+        <span class="menu-toggle-line" aria-hidden="true"></span>
+      </button>
+
+    </div>
+  </header>
+
+  <main>
+    <!-- ========================================================================
+         HERO SECTION (PRIMERA VISTA)
+         ======================================================================== -->
+    <section class="hero-section" id="hero">
+      <div class="container hero-grid">
+        <!-- Columna Izquierda: Mensaje Editorial y Propuesta de Valor -->
+        <div class="hero-content">
+          <div class="eyebrow">
+            <span class="eyebrow-line" aria-hidden="true"></span>
+            <span class="eyebrow-text">SOFTWARE / CALIDAD / GESTIÓN</span>
+          </div>
+
+          <h1 class="hero-title">
+            Calidad de<br>
+            software, <em>sin humo.</em><br>
+            Un <span class="highlight-sistema">sistema</span> para<br>
+            entenderla.
+          </h1>
+
+          <p class="hero-desc">
+            Un sitio educativo y práctico sobre gestión de <strong>calidad de software y procesos de desarrollo</strong>, diseñado para ayudarte a comprender los conceptos clave, las metodologías ágiles y las buenas prácticas de la industria. Todo en un solo lugar, claro, simple y sin vueltas.
+          </p>
+        </div>
+
+        <!-- Columna Derecha: Emblema / Sello de Calidad -->
+        <div class="hero-visual">
+          <div class="emblem-card">
+            <img src="img/Los_Control_Z.png" alt="Emblema de Calidad Control Z - Software Quality Assurance" class="emblem-img" width="360" height="360">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: CONOCÉ POR DENTRO (TARJETAS DE SELECCIÓN)
+         ======================================================================== -->
+    <section class="explore-section" id="secciones">
+      <div class="container">
+        <!-- Cabecera de Sección -->
+        <div class="section-header">
+          <div class="eyebrow">
+            <span class="eyebrow-line" aria-hidden="true"></span>
+            <span class="eyebrow-text">CONOCÉ POR DENTRO</span>
+          </div>
+          <h2 class="section-title">
+            Por dónde empezar,<br>
+            según lo que quieras.
+          </h2>
+        </div>
+
+        <!-- Grilla de Tarjetas -->
+        <div class="cards-grid">
+          <!-- Tarjeta 01 -->
+          <a href="pages/fundamentos.html" class="explore-card" id="card-01">
+            <div class="card-top">
+              <span class="card-tag">SELECCIÓN #01</span>
+              <span class="card-arrow-circle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </div>
+            <h3 class="card-title">Gestión de la Calidad del Software</h3>
+            <p class="card-text">Conceptos, normas, métricas y herramientas para mejorar la calidad en el desarrollo.</p>
+            <div class="card-action">
+              <span>EXPLORAR</span>
+              <span class="action-arrow">→</span>
+            </div>
+          </a>
+
+          <!-- Tarjeta 02 -->
+          <a href="pages/ciclo-de-vida.html" class="explore-card" id="card-02">
+            <div class="card-top">
+              <span class="card-tag">SELECCIÓN #02</span>
+              <span class="card-arrow-circle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </div>
+            <h3 class="card-title">Procesos de Desarrollo</h3>
+            <p class="card-text">Ciclo de vida del software, roles, metodologías y buenas prácticas para un desarrollo eficiente.</p>
+            <div class="card-action">
+              <span>EXPLORAR</span>
+              <span class="action-arrow">→</span>
+            </div>
+          </a>
+
+          <!-- Tarjeta 03 -->
+          <a href="pages/metodologias-agiles.html" class="explore-card" id="card-03">
+            <div class="card-top">
+              <span class="card-tag">SELECCIÓN #03</span>
+              <span class="card-arrow-circle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </div>
+            <h3 class="card-title">Metodologías Ágiles</h3>
+            <p class="card-text">Scrum, Kanban, Lean y XP. Cómo trabajar en equipo y entregar valor de forma continua.</p>
+            <div class="card-action">
+              <span>EXPLORAR</span>
+              <span class="action-arrow">→</span>
+            </div>
+          </a>
+
+          <!-- Tarjeta 04 (Ancha / 2 Columnas) -->
+          <a href="pages/en-construccion.html?seccion=Recursos%20y%20Aprendizaje" class="explore-card card-wide" id="card-04">
+            <div class="card-top">
+              <span class="card-tag">SELECCIÓN #04</span>
+              <span class="card-arrow-circle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </div>
+            <h3 class="card-title">Recursos y Aprendizaje</h3>
+            <p class="card-text">Enlaces, apuntes, artículos y recursos útiles para seguir aprendiendo y profundizando.</p>
+            <div class="card-action">
+              <span>EXPLORAR</span>
+              <span class="action-arrow">→</span>
+            </div>
+          </a>
+
+          <!-- Tarjeta 05 (Especial / Oscura / 1 Columna) -->
+          <a href="pages/en-construccion.html?seccion=Aplicaci%C3%B3n%20pr%C3%A1ctica" class="explore-card card-featured" id="card-especial">
+            <div class="card-top">
+              <span class="card-tag">SECCIÓN ESPECIAL</span>
+              <span class="card-arrow-circle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </div>
+            <h3 class="card-title">Una herramienta para pensar mejor.</h3>
+            <p class="card-text">El objetivo es darte una base sólida y práctica para que puedas aplicar lo aprendido en proyectos reales.</p>
+            <div class="card-action">
+              <span>VER MÁS</span>
+              <span class="action-arrow">→</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       FOOTER (PIE DE PÁGINA)
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <!-- Columna 1: Marca y Propósito -->
+        <div class="footer-brand">
+          <a href="#hero" class="brand" aria-label="Control Z">
+            <div class="brand-avatar" aria-hidden="true">Cz</div>
+            <div class="brand-text">
+              <span class="brand-title">CONTROL Z</span>
+              <span class="brand-subtitle">SISTEMA DE GESTIÓN Y CALIDAD DE SOFTWARE</span>
+            </div>
+          </a>
+          <p class="footer-desc">
+            Un espacio creado para aprender, compartir y aplicar conocimientos sobre calidad de software y desarrollo de sistemas.
+          </p>
+        </div>
+
+        <!-- Columna 2: Contenido -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">CONTENIDO</h4>
+          <ul class="footer-links">
+            <li><a href="pages/fundamentos.html">Calidad de Software</a></li>
+            <li><a href="pages/ciclo-de-vida.html">Procesos de Desarrollo</a></li>
+            <li><a href="pages/metodologias-agiles.html">Metodologías Ágiles</a></li>
+            <li><a href="pages/en-construccion.html?seccion=Recursos%20y%20Aprendizaje">Recursos y Aprendizaje</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna 3: Herramientas -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">HERRAMIENTAS</h4>
+          <ul class="footer-links">
+            <li><a href="pages/en-construccion.html?seccion=Calculadoras">Calculadoras</a></li>
+            <li><a href="pages/en-construccion.html?seccion=Plantillas">Plantillas</a></li>
+            <li><a href="pages/en-construccion.html?seccion=Enlaces%20%C3%BAtiles">Enlaces útiles</a></li>
+          </ul>
+        </div>
+
+        <!-- Columna 4: Soporte -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">SOPORTE</h4>
+          <ul class="footer-links">
+            <li><a href="pages/en-construccion.html?seccion=Contacto">Contacto</a></li>
+            <li><a href="pages/en-construccion.html?seccion=Preguntas%20frecuentes">Preguntas Frecuentes</a></li>
+            <li><a href="pages/sobre-nosotros.html">Sobre nosotros</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Barra de Copyright Inferior -->
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2026 Control Z · Proyecto académico</p>
+        <div class="footer-legal-links">
+          <a href="pages/en-construccion.html?seccion=T%C3%A9rminos">Términos</a>
+          <span class="footer-separator">|</span>
+          <a href="pages/en-construccion.html?seccion=Privacidad">Privacidad</a>
+          <span class="footer-separator">|</span>
+          <a href="pages/en-construccion.html?seccion=Cookies">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       MENÚ DE NAVEGACIÓN (Hamburguesa)
+       Todas las opciones del sitio viven dentro de este drawer: secciones,
+       recursos y soporte.
+       =================================================================== -->
+  <div class="menu-overlay" id="siteMenu" aria-hidden="true">
+    <div class="menu-scrim" data-menu-close></div>
+
+    <aside class="menu-panel" role="dialog" aria-modal="true" aria-label="Menú de navegación principal">
+      <div class="menu-head">
+        <span class="menu-eyebrow">CONTROL Z · NAVEGACIÓN</span>
+        <button class="menu-close" data-menu-close aria-label="Cerrar menú" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <nav class="menu-nav" aria-label="Menú principal">
+        <div class="menu-group">
+          <h5 class="menu-group-title">Secciones</h5>
+          <a class="menu-link" href="#hero">
+            <span class="menu-number">00</span>
+            <span class="menu-label">Inicio</span>
+            <span class="menu-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="menu-link" href="pages/fundamentos.html">
+            <span class="menu-number">01</span>
+            <span class="menu-label">Gestión de la Calidad</span>
+            <span class="menu-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="menu-link" href="pages/ciclo-de-vida.html">
+            <span class="menu-number">02</span>
+            <span class="menu-label">Procesos de Desarrollo</span>
+            <span class="menu-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="menu-link" href="pages/metodologias-agiles.html">
+            <span class="menu-number">03</span>
+            <span class="menu-label">Metodologías Ágiles</span>
+            <span class="menu-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="menu-link" href="pages/en-construccion.html?seccion=Recursos%20y%20Aprendizaje">
+            <span class="menu-number">04</span>
+            <span class="menu-label">Recursos y Aprendizaje</span>
+            <span class="menu-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="menu-link menu-link-featured" href="pages/en-construccion.html?seccion=Aplicaci%C3%B3n%20pr%C3%A1ctica">
+            <span class="menu-number" aria-hidden="true">05</span>
+            <span class="menu-label">Sección Especial</span>
+            <span class="menu-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div class="menu-group">
+          <h5 class="menu-group-title">Herramientas</h5>
+          <a class="menu-link" href="pages/en-construccion.html?seccion=Calculadoras">
+            <span class="menu-number" aria-hidden="true">01</span>
+            <span class="menu-label">Calculadoras</span>
+            <span class="menu-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="menu-link" href="pages/en-construccion.html?seccion=Plantillas">
+            <span class="menu-number" aria-hidden="true">02</span>
+            <span class="menu-label">Plantillas</span>
+            <span class="menu-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="menu-link" href="pages/en-construccion.html?seccion=Enlaces%20%C3%BAtiles">
+            <span class="menu-number" aria-hidden="true">03</span>
+            <span class="menu-label">Enlaces Útiles</span>
+            <span class="menu-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div class="menu-group">
+          <h5 class="menu-group-title">Soporte</h5>
+          <a class="menu-link" href="pages/en-construccion.html?seccion=Preguntas%20frecuentes">
+            <span class="menu-number" aria-hidden="true">·</span>
+            <span class="menu-label">Preguntas Frecuentes</span>
+            <span class="menu-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="menu-link" href="pages/en-construccion.html?seccion=Contacto">
+            <span class="menu-number" aria-hidden="true">·</span>
+            <span class="menu-label">Contacto</span>
+            <span class="menu-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="menu-link" href="pages/sobre-nosotros.html">
+            <span class="menu-number" aria-hidden="true">·</span>
+            <span class="menu-label">Sobre Nosotros</span>
+            <span class="menu-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="menu-foot">
+        <span class="menu-foot-brand">CONTROL Z — SGCS 2026</span>
+        <a class="menu-foot-link" href="pages/Leyes-de-UX.html">Leyes de UX aplicadas →</a>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Script interactivo principal -->
+  <script src="js/main.js"></script>
+  <script src="js/scroll-reveal.js"></script>
+</body>
+</html>
