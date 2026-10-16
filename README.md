@@ -31,7 +31,7 @@ Recursos, contacto, preguntas frecuentes, herramientas y aplicación práctica t
 
 ## Interacciones
 
-- Menús de navegación adaptables en las páginas que los incluyen.
+- Un menú lateral común en Inicio y en las secciones, con navegación entre todas las páginas.
 - Animaciones de entrada al desplazarse, con respeto a la preferencia del sistema para reducir el movimiento.
 - Comparación de normas ISO en Fundamentos.
 - Recorrido interactivo de etapas del ciclo de vida.

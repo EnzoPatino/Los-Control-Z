@@ -166,13 +166,5 @@ document.addEventListener('DOMContentLoaded', () => {
   if(kanbanRolesGrid)kanbanRolesGrid.innerHTML=kanbanRoles.map(([name,desc])=>`<article class="role-card"><strong>${name}</strong><p>${desc}</p></article>`).join('');
   const links=[...document.querySelectorAll('.contents-nav a')];
   if('IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)links.forEach(link=>link.classList.toggle('is-active',link.hash===`#${entry.target.id}`))}),{rootMargin:'-15% 0px -70% 0px'});links.forEach(link=>{const section=document.querySelector(link.hash);if(section)observer.observe(section)})}
-  const menu=document.querySelector('.guide-menu');
-  const guideNav=document.getElementById('guideNav');
-  if(menu&&guideNav){
-    const closeMenu=(restoreFocus=false)=>{guideNav.hidden=true;menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Abrir menú de navegación');if(restoreFocus)menu.focus()};
-    menu.addEventListener('click',()=>{const opening=guideNav.hidden;guideNav.hidden=!opening;menu.setAttribute('aria-expanded',String(opening));menu.setAttribute('aria-label',opening?'Cerrar menú de navegación':'Abrir menú de navegación')});
-    guideNav.addEventListener('click',event=>{if(event.target.closest('a'))closeMenu()});
-    document.addEventListener('click',event=>{if(!guideNav.hidden&&!guideNav.contains(event.target)&&!menu.contains(event.target))closeMenu()});
-    document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!guideNav.hidden)closeMenu(true)});
-  }
+
 });

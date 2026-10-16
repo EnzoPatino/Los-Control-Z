@@ -9,7 +9,7 @@
 @media(max-width:620px){.journey-detail.is-open{margin-top:15px}.journey-detail.is-open .journey-detail-inner{grid-template-columns:1fr 1fr;gap:10px;padding:14px}.detail-stage-number{grid-column:1/-1}.detail-stage-copy{grid-column:1/-1}.detail-stage-result{grid-column:1/-1}.detail-stage-field p{font-size:9px}.task-actions{margin-top:4px}.task-actions button{width:27px;height:24px}.kanban-task{width:auto;display:block;min-height:0}.board-dropzone{min-height:35px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 
-.guide-nav{position:absolute;right:max(48px,calc((100vw - 1368px)/2));top:68px;z-index:5;min-width:220px;padding:8px;background:#1c263f;border:1px solid #3e5078;border-radius:10px;box-shadow:0 16px 36px #080d1b70}.guide-nav[hidden]{display:none}.guide-nav:not([hidden]){display:grid}.guide-nav a{padding:10px 12px;border-radius:6px;color:#c8cce0;font-size:12px}.guide-nav a:hover,.guide-nav a[aria-current="page"]{background:#2b3655;color:#c5bbff}.guide-nav a[aria-current="page"]{font-weight:700}
+
 .has-scroll-reveal .agile-section,.has-scroll-reveal .stage-section,.has-scroll-reveal .cycle-note,.has-scroll-reveal .remember,.has-scroll-reveal .agile-takeaway{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.2,1)}
 .has-scroll-reveal .is-visible{opacity:1;transform:translateY(0)}
 @keyframes card-rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}

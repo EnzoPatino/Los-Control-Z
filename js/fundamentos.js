@@ -72,8 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const flipperHintText = document.getElementById('flipperHintText');
 
   // --- Menú Hamburguesa de Navegación Rápida ---
-  const menuButton = document.getElementById('menuButton');
-  const quickNav = document.getElementById('quickNav');
 
   let activeIso = 'iso9126'; // 'iso9126' | 'iso25000'
 
@@ -234,31 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- Menú rápido Topbar ---
-  if (menuButton && quickNav) {
-    menuButton.addEventListener('click', () => {
-      const opening = quickNav.hidden;
-      quickNav.hidden = !opening;
-      menuButton.setAttribute('aria-expanded', String(opening));
-      menuButton.setAttribute('aria-label', opening ? 'Cerrar menú' : 'Abrir menú');
-    });
 
-    quickNav.addEventListener('click', (event) => {
-      if (event.target.closest('a')) {
-        quickNav.hidden = true;
-        menuButton.setAttribute('aria-expanded', 'false');
-        menuButton.setAttribute('aria-label', 'Abrir menú');
-      }
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && !quickNav.hidden) {
-        quickNav.hidden = true;
-        menuButton.setAttribute('aria-expanded', 'false');
-        menuButton.setAttribute('aria-label', 'Abrir menú');
-        menuButton.focus();
-      }
-    });
-  }
 
   // Inicializar estado base en la tarjeta (el modal permanece oculto)
   renderIsoState('iso9126', false);
