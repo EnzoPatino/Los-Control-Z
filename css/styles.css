@@ -724,55 +724,6 @@ button {
    Botón navy (Fitts: ≥ 46px) arriba a la derecha. Todas las opciones del
    sitio viven dentro del drawer; el header no muestra links sueltos.
    -------------------------------------------------------------------------- */
-/* --- Botón Hamburguesa --- */
-.menu-toggle {
-  position: relative;
-  width: 46px;
-  height: 46px;
-  background-color: var(--color-dark-navy);
-  border-radius: var(--radius-md);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(14, 19, 39, 0.28);
-  transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
-}
-
-.menu-toggle:hover {
-  background-color: var(--color-primary-hover);
-  transform: translateY(-1px);
-}
-
-.menu-toggle:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 3px;
-}
-
-.menu-toggle-line {
-  display: block;
-  width: 20px;
-  height: 2px;
-  background-color: #ffffff;
-  border-radius: 2px;
-  transition: transform var(--transition-base), opacity var(--transition-base), background-color var(--transition-fast);
-}
-
-/* Animación hamburguesa → X cuando el menú está abierto */
-.menu-toggle[aria-expanded="true"] .menu-toggle-line:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
-}
-
-.menu-toggle[aria-expanded="true"] .menu-toggle-line:nth-child(2) {
-  opacity: 0;
-}
-
-.menu-toggle[aria-expanded="true"] .menu-toggle-line:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
-}
-
 /* --- Overlay (scrim + panel) --- */
 .menu-overlay {
   position: fixed;
@@ -990,3 +941,5 @@ button {
   outline: 2px solid var(--color-badge-special);
   outline-offset: 2px;
 }
+
+.brand-avatar[src] { object-fit: cover; background: transparent; box-shadow: 0 4px 12px rgba(14, 19, 39, 0.15); }
