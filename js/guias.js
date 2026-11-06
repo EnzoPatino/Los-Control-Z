@@ -189,17 +189,51 @@ document.addEventListener('DOMContentLoaded', () => {
   const kanbanRolesGrid=document.getElementById('kanbanRoles');
   if(kanbanRolesGrid)kanbanRolesGrid.innerHTML=kanbanRoles.map(([name,desc])=>`<article class="role-card"><strong>${name}</strong><p>${desc}</p></article>`).join('');
   const methodPicker=document.getElementById('methodPicker');
-  if(methodPicker)methodPicker.addEventListener('submit',event=>{
-    event.preventDefault();
-    const answers=Object.fromEntries(new FormData(methodPicker));
-    let method='Scrum', explanation='Los cambios y las entregas frecuentes se pueden organizar en Sprints con objetivos claros.';
-    if(answers.flow==='yes'){method='Kanban';explanation='Un flujo continuo de solicitudes se beneficia de visualizar el trabajo y limitar las tareas en curso.'}
-    else if(answers.change==='no'&&answers.delivery==='no'){method='Cascada';explanation='Si el alcance está definido y no se requieren incrementos frecuentes, un plan secuencial puede ser adecuado.'}
-    else if(answers.delivery==='no'){method='Kanban';explanation='Visualizar el trabajo y mejorar el flujo permite entregar cuando cada elemento queda listo.'}
+  if(methodPicker){
+    const steps=[...methodPicker.querySelectorAll('[data-method-step]')];
+    const back=methodPicker.querySelector('[data-method-back]');
+    const next=methodPicker.querySelector('[data-method-next]');
+    const submit=methodPicker.querySelector('[data-method-submit]');
+    const progress=document.getElementById('methodProgress');
+    const progressLabel=document.getElementById('methodStepLabel');
+    const progressPercent=document.getElementById('methodProgressPercent');
+    const error=document.getElementById('methodError');
     const result=document.getElementById('methodResult');
-    result.innerHTML=`<strong>Sugerencia inicial: ${method}</strong><span>${explanation} Revisá también las condiciones y necesidades de tu equipo antes de decidir.</span>`;
-    result.classList.add('has-result');
-  });
+    let activeStep=0;
+    const showStep=index=>{
+      activeStep=Math.max(0,Math.min(index,steps.length-1));
+      steps.forEach((step,i)=>{step.hidden=i!==activeStep;step.classList.toggle('is-active',i===activeStep)});
+      back.hidden=activeStep===0;next.hidden=activeStep===steps.length-1;submit.hidden=activeStep!==steps.length-1;
+      progress.value=activeStep+1;progressLabel.textContent=`Pregunta ${activeStep+1} de ${steps.length}`;
+      progressPercent.textContent=`${Math.round((activeStep+1)/steps.length*100)}%`;
+      error.hidden=true;
+    };
+    next.addEventListener('click',()=>{
+      if(!steps[activeStep].querySelector('input:checked')){error.hidden=false;return}
+      showStep(activeStep+1);steps[activeStep].querySelector('input')?.focus();
+    });
+    back.addEventListener('click',()=>showStep(activeStep-1));
+    methodPicker.addEventListener('change',()=>{error.hidden=true});
+    methodPicker.addEventListener('submit',event=>{
+      event.preventDefault();
+      if(!steps[activeStep].querySelector('input:checked')){error.hidden=false;return}
+      const answers=Object.fromEntries(new FormData(methodPicker));
+      let method, explanation, href;
+      if(answers.flow==='yes'){
+        method='Kanban';explanation='El trabajo llega como solicitudes continuas. Visualizar el flujo y limitar el trabajo en curso ayuda a entregar y mejorar el servicio.';href='#kanban';
+      }else if(answers.change==='no'&&answers.delivery==='no'){
+        method='Cascada';explanation='Los requisitos están definidos y no se priorizan entregas frecuentes. Un proceso por etapas con validaciones planificadas puede ser adecuado.';href='modelos-tradicionales.html#cascada';
+      }else{
+        method='Scrum';explanation='El proyecto necesita adaptación y avances frecuentes. Sprints con objetivos y revisión periódica pueden ayudar al equipo a aprender y ajustar el plan.';href='#scrum';
+      }
+      const answersText=[['Cambio de requisitos',answers.change==='yes'?'Se esperan cambios':'Están bastante definidos'],['Entregas frecuentes',answers.delivery==='yes'?'Son necesarias':'No son prioritarias'],['Flujo continuo',answers.flow==='yes'?'Sí':'No']];
+      methodPicker.hidden=true;result.hidden=false;
+      result.innerHTML=`<strong>Sugerencia inicial: ${method}</strong><p>${explanation}</p><h3>Según tus respuestas</h3><ul>${answersText.map(([label,value])=>`<li><b>${label}:</b> ${value}</li>`).join('')}</ul><p>Es una orientación para iniciar la conversación; considerá también el contexto, los riesgos y la experiencia del equipo.</p><a href="${href}">Conocer ${method}</a><button type="button" data-method-reset>Ajustar respuestas</button>`;
+      result.querySelector('[data-method-reset]').addEventListener('click',()=>{result.hidden=true;methodPicker.hidden=false;showStep(0);steps[0].querySelector('input:checked')?.focus()});
+      result.querySelector('a').focus();
+    });
+    showStep(0);
+  }
   const compareOutput=document.getElementById('compareOutput');
   if(compareOutput){
     const comparison={
@@ -212,10 +246,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const checks=[...document.querySelectorAll('.compare-options input[type="checkbox"]')];
     const renderComparison=()=>{
       const selected=checks.filter(input=>input.checked).map(input=>input.value);
-      if(selected.length<2){compareOutput.innerHTML='<p class="compare-empty">Elegí al menos dos metodologías para mostrar la comparación.</p>';status.textContent='Seleccioná una metodología más para completar la comparación.';return}
+      if(selected.length<2){compareOutput.innerHTML='<p class="compare-empty">Elegí al menos dos metodologías para mostrar la comparación.</p>';if(status)status.textContent='Seleccioná una metodología más para completar la comparación.';return}
       const rows=[['Organización del trabajo','organizacion'],['Adaptación','adaptacion'],['Entrega','entrega'],['Roles','roles']];
       compareOutput.innerHTML=`<table class="compare-table"><caption>Comparación de ${selected.join(', ')}</caption><thead><tr><th scope="col">Aspecto</th>${selected.map(name=>`<th scope="col">${name}</th>`).join('')}</tr></thead><tbody>${rows.map(([label,key])=>`<tr><th scope="row">${label}</th>${selected.map(name=>`<td>${comparison[name][key]}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
-      status.textContent=`Comparando ${selected.length} metodologías.`;
+      if(status)status.textContent=`Comparando ${selected.length} metodologías.`;
     };
     checks.forEach(input=>input.addEventListener('change',renderComparison));
     renderComparison();
