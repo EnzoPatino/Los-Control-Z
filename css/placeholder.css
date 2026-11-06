@@ -4,3 +4,28 @@
 .brand-mark[src] { object-fit: cover; background: transparent; }
 
 .topbar-actions { display: flex; align-items: center; gap: 16px; }
+
+/* Escala de lectura y áreas táctiles */
+.brand-copy strong { font-size: 12px; }
+.brand-copy small { font-size: 9px; }
+.home-link { display: inline-flex; align-items: center; min-height: 44px; font-size: 13px; }
+.status { font-size: 11px; }
+.description { font-size: 15px; }
+.back-button { min-height: 44px; font-size: 14px; }
+.page-footer { font-size: 12px; }
+
+@media (max-width: 520px) {
+  .home-link { display: none; }
+  .brand-copy small { font-size: 9px; }
+  .description { font-size: 14px; }
+  .page-footer { flex-wrap: wrap; font-size: 11px; }
+}
+
+@media (max-width: 420px) {
+  .brand-copy small { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-button { transition: none; }
+  .back-button:hover { transform: none; }
+}

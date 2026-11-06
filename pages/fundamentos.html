@@ -27,9 +27,10 @@
     <section class="hero">
       <div class="hero-inner">
         <div class="hero-copy">
+          <nav class="hero-breadcrumb" aria-label="Ruta de navegación"><a href="../index.html">Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Fundamentos de calidad</span></nav>
           <div class="eyebrow"><span class="eyebrow-rule"></span><span>US-02 / FUNDAMENTOS DE CALIDAD</span></div>
           <h1>Fundamentos<br>de <em>Calidad.</em></h1>
-          <p>Como usuario, quiero acceder a la sección “Fundamentos” para comprender los conceptos clave de calidad, métricas y estándares como ISO 9126/25000.</p>
+          <p>Los conceptos clave para entender la calidad de software: qué es, cómo se mide y qué estándares la ordenan, como ISO 9126 e ISO/IEC 25000.</p>
         </div>
         <div class="hero-art" aria-hidden="true">
           <div class="art-orbit"></div>
@@ -80,10 +81,10 @@
               <span class="pulse-beacon"></span>
               <span>VISTA DETALLADA</span>
             </div>
-            <button class="norm-switch" id="normSwitch" type="button" aria-label="Mostrar información de ISO/IEC 25000" aria-pressed="false">
+            <button class="norm-switch" id="normSwitch" type="button" tabindex="-1" aria-hidden="true">
               <span class="norm-stack" aria-hidden="true">
                 <span class="norm-back">ISO/IEC<br><b>25000</b></span>
-                <span class="norm-front"><span class="norm-kicker">NORMA</span><b id="normBadge">9126</b><span class="norm-tap">TOCÁ<br>PARA GIRAR</span></span>
+                <span class="norm-front"><span class="norm-kicker">NORMA</span><b id="normBadge">9126</b></span>
               </span>
             </button>
             <div class="topic-content norm-copy" aria-live="polite" aria-atomic="true">
@@ -195,106 +196,14 @@
   <footer class="footer">
     <div class="footer-main">
       <div class="footer-about"><a href="../index.html" class="brand"><img class="brand-mark" src="../img/Los_Control_Z.png" alt=""><span class="brand-copy"><strong>CONTROL Z</strong><small>SISTEMA DE GESTIÓN Y CALIDAD DE SOFTWARE</small></span></a><p>Un espacio creado para aprender, compartir y aplicar conocimientos sobre calidad de software y desarrollo de sistemas.</p></div>
-      <div><h3>CONTENIDO</h3><a href="fundamentos.html">Calidad de Software</a><a href="ciclo-de-vida.html">Procesos de Desarrollo</a><a href="metodologias-agiles.html">Metodologías Ágiles</a><a href="en-construccion.html?seccion=Recursos%20y%20Aprendizaje">Recursos y Aprendizaje</a></div>
-      <div><h3>HERRAMIENTAS</h3><a href="en-construccion.html?seccion=Calculadoras">Calculadoras</a><a href="en-construccion.html?seccion=Plantillas">Plantillas</a><a href="en-construccion.html?seccion=Enlaces%20%C3%BAtiles">Enlaces Útiles</a></div>
-      <div><h3>SOPORTE</h3><a href="en-construccion.html?seccion=Contacto">Contacto</a><a href="en-construccion.html?seccion=Preguntas%20frecuentes">Preguntas Frecuentes</a><a href="sobre-nosotros.html">Sobre nosotros</a></div>
+      <div><h3>CONTENIDO</h3><a href="fundamentos.html" aria-current="page">Fundamentos de calidad</a><a href="ciclo-de-vida.html">Ciclo de vida</a><a href="calidad-pruebas.html">Pruebas y herramientas</a><a href="modelos-tradicionales.html">Modelos tradicionales</a><a href="metodologias-agiles.html">Metodologías ágiles</a><a href="en-construccion.html?seccion=Recursos%20y%20Aprendizaje">Recursos y Aprendizaje</a></div>
+      <div><h3>HERRAMIENTAS</h3><a href="metodologias-agiles.html#selector-metodologia">Selector de metodología</a><a href="comparador-metodologias.html">Comparador de metodologías</a><a href="metodologias-agiles.html#recursos">Enlaces de interés</a><a href="en-construccion.html?seccion=Calculadoras">Calculadoras</a><a href="en-construccion.html?seccion=Plantillas">Plantillas</a></div>
+      <div><h3>SOPORTE</h3><a href="metodologias-agiles.html#faq">Preguntas frecuentes</a><a href="en-construccion.html?seccion=Contacto">Contacto</a><a href="sobre-nosotros.html">Sobre nosotros</a></div>
     </div>
     <div class="footer-bottom"><span>© 2026 Control Z · Proyecto académico</span><span>Términos&nbsp; | &nbsp;Privacidad&nbsp; | &nbsp;Cookies</span></div>
   </footer>
   <script src="../js/fundamentos.js"></script>
-  <div class="menu-overlay" id="siteMenu" aria-hidden="true">
-    <div class="menu-scrim" data-menu-close></div>
-
-    <aside class="menu-panel" role="dialog" aria-modal="true" aria-label="Menú de navegación principal">
-      <div class="menu-head">
-        <span class="menu-eyebrow">CONTROL Z · NAVEGACIÓN</span>
-        <button class="menu-close" data-menu-close aria-label="Cerrar menú" type="button">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <path d="M18 6 6 18M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-
-      <nav class="menu-nav" aria-label="Menú principal">
-        <div class="menu-group">
-          <h5 class="menu-group-title">Secciones</h5>
-          <a class="menu-link" href="../index.html#hero">
-            <span class="menu-number">00</span>
-            <span class="menu-label">Inicio</span>
-            <span class="menu-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="menu-link" href="../pages/fundamentos.html">
-            <span class="menu-number">01</span>
-            <span class="menu-label">Gestión de la Calidad</span>
-            <span class="menu-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="menu-link" href="../pages/ciclo-de-vida.html">
-            <span class="menu-number">02</span>
-            <span class="menu-label">Procesos de Desarrollo</span>
-            <span class="menu-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="menu-link" href="../pages/metodologias-agiles.html">
-            <span class="menu-number">03</span>
-            <span class="menu-label">Metodologías Ágiles</span>
-            <span class="menu-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="menu-link" href="../pages/en-construccion.html?seccion=Recursos%20y%20Aprendizaje">
-            <span class="menu-number">04</span>
-            <span class="menu-label">Recursos y Aprendizaje</span>
-            <span class="menu-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="menu-link menu-link-featured" href="../pages/en-construccion.html?seccion=Aplicaci%C3%B3n%20pr%C3%A1ctica">
-            <span class="menu-number" aria-hidden="true">05</span>
-            <span class="menu-label">Sección Especial</span>
-            <span class="menu-arrow" aria-hidden="true">→</span>
-          </a>
-        </div>
-
-        <div class="menu-group">
-          <h5 class="menu-group-title">Herramientas</h5>
-          <a class="menu-link" href="../pages/en-construccion.html?seccion=Calculadoras">
-            <span class="menu-number" aria-hidden="true">01</span>
-            <span class="menu-label">Calculadoras</span>
-            <span class="menu-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="menu-link" href="../pages/en-construccion.html?seccion=Plantillas">
-            <span class="menu-number" aria-hidden="true">02</span>
-            <span class="menu-label">Plantillas</span>
-            <span class="menu-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="menu-link" href="../pages/en-construccion.html?seccion=Enlaces%20%C3%BAtiles">
-            <span class="menu-number" aria-hidden="true">03</span>
-            <span class="menu-label">Enlaces Útiles</span>
-            <span class="menu-arrow" aria-hidden="true">→</span>
-          </a>
-        </div>
-
-        <div class="menu-group">
-          <h5 class="menu-group-title">Soporte</h5>
-          <a class="menu-link" href="../pages/en-construccion.html?seccion=Preguntas%20frecuentes">
-            <span class="menu-number" aria-hidden="true">·</span>
-            <span class="menu-label">Preguntas Frecuentes</span>
-            <span class="menu-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="menu-link" href="../pages/en-construccion.html?seccion=Contacto">
-            <span class="menu-number" aria-hidden="true">·</span>
-            <span class="menu-label">Contacto</span>
-            <span class="menu-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="menu-link" href="../pages/sobre-nosotros.html">
-            <span class="menu-number" aria-hidden="true">·</span>
-            <span class="menu-label">Sobre Nosotros</span>
-            <span class="menu-arrow" aria-hidden="true">→</span>
-          </a>
-        </div>
-      </nav>
-
-      <div class="menu-foot">
-        <span class="menu-foot-brand">CONTROL Z — SGCS 2026</span>
-        <a class="menu-foot-link" href="../pages/Leyes-de-UX.html">Leyes de UX aplicadas →</a>
-      </div>
-    </aside>
-  </div>
+  <div class="menu-overlay" id="siteMenu" aria-hidden="true"></div>
   <script src="../js/main.js"></script>
   <script src="../js/scroll-reveal.js"></script>
 </body>
