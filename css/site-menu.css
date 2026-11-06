@@ -4,10 +4,6 @@
 .menu-toggle:hover{background:#432ec7;transform:translateY(-1px);box-shadow:0 7px 18px rgba(14,19,39,.3)}
 .menu-toggle:focus-visible{outline:2px solid #5238ee;outline-offset:3px}
 .menu-toggle span.menu-toggle-line{display:block;width:20px;height:2px;margin:0;padding:0;border:0;border-radius:2px;background:#fff;opacity:1;transform:none;transition:transform .3s cubic-bezier(.16,1,.3,1),opacity .18s ease}
-.menu-toggle[aria-expanded="true"]{background:#432ec7}
-.menu-toggle[aria-expanded="true"] span.menu-toggle-line:first-child{transform:translateY(8px) rotate(45deg)}
-.menu-toggle[aria-expanded="true"] span.menu-toggle-line:nth-child(2){opacity:0}
-.menu-toggle[aria-expanded="true"] span.menu-toggle-line:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
 @media(prefers-reduced-motion:reduce){.menu-toggle,.menu-toggle span.menu-toggle-line{transition:none}}
 
 .menu-overlay {
@@ -15,6 +11,8 @@
   inset: 0;
   z-index: 100;
   pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear .3s;
 }
 
 .menu-scrim {
@@ -29,6 +27,8 @@
 
 .menu-overlay.is-open {
   pointer-events: auto;
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 .menu-overlay.is-open .menu-scrim {
@@ -54,10 +54,6 @@
 
 .menu-overlay.is-open .menu-panel {
   transform: translateX(0);
-}
-
-.item-menu-active {
-  color: var(--color-badge-special, #c084fc) !important;
 }
 
 /* Cabecera del panel */
@@ -126,7 +122,7 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-text-soft, #94a3b8);
-  margin-bottom: 10px;
+  margin: 0 0 10px;
 }
 
 .menu-link {
@@ -159,7 +155,8 @@
   transition: color var(--transition-fast, 180ms ease);
 }
 
-.menu-link:hover .menu-number {
+.menu-link:hover .menu-number,
+.menu-link:focus-visible .menu-number {
   color: var(--color-badge-special, #c084fc);
 }
 
@@ -178,7 +175,8 @@
   transition: opacity var(--transition-fast, 180ms ease), transform var(--transition-fast, 180ms ease), color var(--transition-fast, 180ms ease);
 }
 
-.menu-link:hover .menu-arrow {
+.menu-link:hover .menu-arrow,
+.menu-link:focus-visible .menu-arrow {
   opacity: 1;
   transform: translateX(0);
   color: var(--color-badge-special, #c084fc);
@@ -229,3 +227,163 @@
   outline-offset: 2px;
 }
 
+/* Página actual y secciones pendientes dentro del menú */
+.menu-link.is-current {
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 2px 0 0 var(--color-badge-special, #c084fc);
+}
+
+.menu-link.is-current .menu-number,
+.menu-link.is-current .menu-label {
+  color: var(--color-badge-special, #c084fc);
+}
+
+.menu-soon {
+  padding: 2px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 99px;
+  color: var(--color-text-soft, #94a3b8);
+  font-family: var(--font-mono, "IBM Plex Mono", monospace);
+  font-size: 0.68rem;
+}
+
+/* Recorrido entre guías */
+.guide-pager {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: min(100% - 48px, 1072px);
+  margin: 12px auto 48px;
+}
+
+.guide-pager:is(.sdlc-page *, main:has(.agile-layout) *) {
+  width: min(100% - 96px, 1368px);
+}
+
+.story-hero ~ .guide-pager {
+  width: min(100% - 96px, 1120px);
+}
+
+@media (max-width: 850px) {
+  .guide-pager:is(.sdlc-page *, main:has(.agile-layout) *),
+  .story-hero ~ .guide-pager { width: min(100% - 48px, 700px); }
+}
+
+@media (max-width: 620px) {
+  .guide-pager:is(.sdlc-page *, main:has(.agile-layout) *),
+  .story-hero ~ .guide-pager { width: calc(100% - 36px); }
+}
+
+.guide-pager-link {
+  display: grid;
+  gap: 4px;
+  padding: 16px 18px;
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  border-radius: 10px;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color .18s ease, transform .18s ease;
+}
+
+.guide-pager-link:hover {
+  border-color: currentColor;
+  transform: translateY(-2px);
+}
+
+.guide-pager-link.is-next {
+  grid-column: 2;
+  text-align: right;
+}
+
+.guide-pager-link small {
+  font-size: 12px;
+  opacity: .72;
+}
+
+.guide-pager-link strong {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* Botón para volver arriba */
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  background: #0e1327;
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(14, 19, 39, .28);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s, background-color .18s ease;
+}
+
+.back-to-top.is-shown {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.back-to-top:hover {
+  background: #432ec7;
+}
+
+/* Foco visible en enlaces de marca y tarjetas de todo el sitio */
+.brand:focus-visible,
+.back-to-top:focus-visible,
+.guide-pager-link:focus-visible,
+.topic-card:focus-visible,
+.practice-card:focus-visible {
+  outline: 2px solid #5238ee;
+  outline-offset: 3px;
+}
+
+/* En pantallas táctiles el hover queda pegado después de tocar */
+@media (hover: none) {
+  .explore-card:hover,
+  .topic-card:hover,
+  .practice-card:hover,
+  .tool-card:hover,
+  .stage-card:hover,
+  .kanban-task:hover,
+  .menu-link:hover,
+  .guide-pager-link:hover,
+  .footer-links a:hover {
+    transform: none;
+  }
+}
+
+/* Transición entre páginas (navegadores compatibles) */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation-duration: .18s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-pager-link,
+  .back-to-top { transition: none; }
+  .guide-pager-link:hover { transform: none; }
+}
+
+@media (max-width: 520px) {
+  .guide-pager { grid-template-columns: 1fr; }
+  .guide-pager-link.is-next { grid-column: auto; }
+  .guide-pager > span { display: none; }
+}
+
+@media print {
+  .back-to-top,
+  .guide-pager { display: none; }
+}

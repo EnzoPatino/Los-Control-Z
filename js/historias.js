@@ -47,9 +47,105 @@ document.addEventListener('DOMContentLoaded', () => {
     const button = document.createElement('button'); button.type = 'button'; button.className = 'diagram-open'; button.setAttribute('aria-label', 'Ampliar gráfico: ciclo de un Sprint en Scrum');
     svg.replaceWith(button); button.append(svg);
   }
-  document.querySelectorAll('.diagram-open').forEach(button => button.addEventListener('click', () => {
-    if (!dialog || !content) return;
-    content.replaceChildren(button.querySelector('svg').cloneNode(true));
+  const modelDescriptions = {
+    cascada: {
+      'Requisitos':'Se acuerdan necesidades, alcance y criterios que guiarán las etapas siguientes.',
+      'Diseño':'Se define la estructura de la solución antes de construirla.',
+      'Implementación':'El diseño se convierte en código y componentes del producto.',
+      'Pruebas':'Se comprueba que el producto cumpla requisitos y se registran defectos.',
+      'Mantenimiento':'Se corrigen fallas y se adapta el producto después de su entrega.'
+    },
+    'modelo-v': {
+      'Requisitos':'La aceptación se planifica a partir de las necesidades acordadas con usuarios y cliente.',
+      'Diseño del sistema':'El diseño de sistema se relaciona con pruebas de sistema.',
+      'Implementación':'En el fondo de la V se construye la solución definida.',
+      'Pruebas de sistema':'Se verifica el sistema completo frente al diseño y sus requisitos.',
+      'Aceptación':'Se valida con usuarios que la solución responde a sus necesidades.'
+    },
+    iterativo: {
+      'Iteración 1':'El equipo planifica, construye y prueba una primera parte del producto.',
+      'Incremento 1':'La primera iteración deja una capacidad utilizable para recibir comentarios.',
+      'Iteración 2':'La retroalimentación guía el siguiente ciclo de planificación y desarrollo.',
+      'Incremento 2':'Se suma una nueva capacidad a lo que ya funciona.',
+      'Iteración 3':'El equipo repite el ciclo para seguir aprendiendo y ajustando prioridades.',
+      'Incremento 3':'Cada incremento amplía el producto y conserva lo entregado antes.'
+    }
+  };
+  document.querySelectorAll('.model-section .diagram-open').forEach(button => {
+    const section = button.closest('.model-section');
+    const svgNode = button.querySelector('svg');
+    const wrapper = document.createElement('div');
+    wrapper.className = 'diagram-open';
+    wrapper.setAttribute('role', 'group');
+    wrapper.setAttribute('aria-label', button.getAttribute('aria-label') || 'Diagrama interactivo');
+    wrapper.append(svgNode);
+    const zoom = document.createElement('button');
+    zoom.type = 'button'; zoom.className = 'diagram-zoom'; zoom.textContent = 'Ampliar diagrama';
+    zoom.setAttribute('aria-label', button.getAttribute('aria-label') || 'Ampliar diagrama');
+    button.replaceWith(wrapper);
+    wrapper.after(zoom);
+    const descriptions = modelDescriptions[section.id];
+    const svg = svgNode;
+    if (!descriptions || !svg) return;
+    const figure = section.querySelector('figure');
+    const info = document.createElement('p');
+    info.className = 'diagram-stage-info';
+    info.setAttribute('aria-live', 'polite');
+    info.textContent = 'Pasá el cursor por una etapa para conocer su propósito.';
+    figure.append(info);
+    const labels = [...svg.querySelectorAll('text')];
+    const rects = [...svg.querySelectorAll('rect')];
+    const circles = [...svg.querySelectorAll('circle')];
+    Object.entries(descriptions).forEach(([label, description], index) => {
+      const text = labels.find(item => item.textContent.trim() === label);
+      if (!text) return;
+      let box;
+      try { box = text.getBBox(); } catch { return; }
+      const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      group.setAttribute('class', 'diagram-stage-hit');
+      group.setAttribute('tabindex', '0');
+      group.setAttribute('role', 'button');
+      group.setAttribute('aria-label', `${label}. ${description}`);
+      group.setAttribute('data-description', description);
+      group.setAttribute('data-label', label);
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      const sourceRect = rects[index];
+      const sourceCircle = circles[index];
+      if (sourceCircle) {
+        const hitCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        ['cx','cy','r'].forEach(attr => hitCircle.setAttribute(attr, sourceCircle.getAttribute(attr)));
+        hitCircle.setAttribute('r', String(Number(sourceCircle.getAttribute('r')) + 6));
+        hitCircle.setAttribute('fill', 'transparent'); hitCircle.setAttribute('stroke', 'transparent'); hitCircle.setAttribute('stroke-width', '4');
+        const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+        title.textContent = `${label}: ${description}`;
+        group.append(hitCircle, title);
+      } else if (sourceRect) {
+        ['x','y','width','height','rx'].forEach(attr => { if (sourceRect.hasAttribute(attr)) rect.setAttribute(attr, sourceRect.getAttribute(attr)); });
+      } else {
+        rect.setAttribute('x', String(box.x - 24)); rect.setAttribute('y', String(box.y - 25));
+        rect.setAttribute('width', String(box.width + 48)); rect.setAttribute('height', String(box.height + 50));
+        rect.setAttribute('rx', '56');
+      }
+      if (!sourceCircle) {
+        rect.setAttribute('fill', 'transparent');
+        rect.setAttribute('stroke', 'transparent');
+        rect.setAttribute('stroke-width', '4');
+        const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+        title.textContent = `${label}: ${description}`;
+        group.append(rect, title);
+      }
+      svg.append(group);
+      const show = () => { info.innerHTML = `<strong>${label}</strong> ${description}`; info.classList.add('is-active'); };
+      group.addEventListener('pointerenter', show);
+      group.addEventListener('focus', show);
+      group.addEventListener('click', event => { event.stopPropagation(); show(); });
+    });
+  });
+  document.querySelectorAll('.diagram-open,.diagram-zoom').forEach(button => button.addEventListener('click', event => {
+    if (!dialog || !content || event.target.closest('.diagram-stage-hit')) return;
+    const svg = button.querySelector('svg') || button.closest('figure')?.querySelector('svg');
+    if (!svg) return;
+    content.replaceChildren(svg.cloneNode(true));
     dialog.showModal();
   }));
   dialog?.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });

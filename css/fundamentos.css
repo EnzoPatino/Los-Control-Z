@@ -237,12 +237,6 @@ button {
   background: #e4e1fc;
   left: 55px;
   top: 10px;
-  animation: pulseOrbit 4.5s ease-in-out infinite alternate;
-}
-
-@keyframes pulseOrbit {
-  0% { transform: scale(1); opacity: 0.85; }
-  100% { transform: scale(1.06); opacity: 1; filter: drop-shadow(0 0 16px rgba(129, 114, 243, 0.25)); }
 }
 
 .art-page {
@@ -341,12 +335,6 @@ button {
   text-align: center;
   box-shadow: 0 6px 16px rgba(14, 19, 39, 0.28);
   border: 2px solid #ffffff;
-  animation: floatPlus 3.2s ease-in-out infinite alternate;
-}
-
-@keyframes floatPlus {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.08); box-shadow: 0 8px 22px rgba(82, 56, 238, 0.4); }
 }
 
 .art-base {
@@ -553,7 +541,7 @@ button {
   height: 6px;
   border-radius: 50%;
   background: var(--color-primary);
-  animation: beaconPulse 1.8s ease-in-out infinite;
+  animation: beaconPulse 1.8s ease-in-out 3;
 }
 
 @keyframes beaconPulse {
@@ -628,14 +616,6 @@ button {
 .norm-kicker {
   font-size: 6px;
   letter-spacing: 0.12em;
-  opacity: 0.85;
-}
-
-.norm-tap {
-  font-size: 5.5px;
-  letter-spacing: 0.05em;
-  position: absolute;
-  bottom: 5px;
   opacity: 0.85;
 }
 
@@ -857,7 +837,7 @@ button {
   border-radius: 50%;
   background: var(--color-primary);
   box-shadow: 0 0 8px var(--color-primary);
-  animation: beaconPulse 1.6s infinite;
+  animation: beaconPulse 1.6s 3;
 }
 
 .spotlight-kicker {
@@ -1398,3 +1378,36 @@ button {
 }
 
 .topbar .brand-mark { object-fit: cover; background: transparent; box-shadow: none; }
+
+/* Ruta de navegación y foco de la tarjeta comparativa */
+.hero-breadcrumb { display: flex; gap: 8px; margin-bottom: 18px; color: var(--color-text-muted, #64748b); font-size: 12px; }
+.hero-breadcrumb a { padding-block: 12px; margin-block: -12px; color: inherit; }
+.hero-breadcrumb a:hover { color: var(--color-primary); }
+.standards-card:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
+
+/* Escala de lectura */
+.brand-copy small { font-size: 9px; }
+.topic-content small, .practice-copy small { font-size: 11px; }
+.topic-description { font-size: 13px; }
+.more, .practice-copy > b { font-size: 11px; }
+.standards-corner-badge { font-size: 10px; }
+.norm-kicker { font-size: 8px; }
+.norm-arrow { display: none; }
+.spotlight-kicker, .spotlight-close-btn, .tab-norm-desc, .flipper-iso { font-size: 12px; }
+.flipper-family, .spotlight-badge { font-size: 10px; }
+.features-label { font-size: 11px; }
+.feature-meta small { font-size: 12px; }
+.spotlight-comparison-note { font-size: 13px; }
+.footer-about .brand-copy small { font-size: 9px; }
+.footer-about p, .footer-main > div > a:not(.brand) { font-size: 13px; }
+.footer-main h3, .footer-bottom { font-size: 11px; }
+.footer-main > div > a:not(.brand) { padding-block: 5px; }
+
+@media (max-width: 520px) {
+  .footer-main > div > a:not(.brand) { padding-block: 11px; }
+}
+
+@media (max-width: 420px) {
+  .brand-copy small { display: none; }
+  .footer-about .brand-copy small { display: block; }
+}

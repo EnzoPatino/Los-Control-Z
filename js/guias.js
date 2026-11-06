@@ -20,6 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const events = [['Sprint','Contenedor de todos los eventos. Dura un mes o menos y permite avanzar hacia el Objetivo del Producto con un Incremento valioso.'],['Sprint Planning','El equipo acuerda por qué el Sprint es valioso, qué puede realizar y cómo hará el trabajo.'],['Daily Scrum','Evento de 15 minutos para Developers: inspeccionar el avance hacia el Objetivo del Sprint y adaptar el plan.'],['Sprint Review','El equipo y las partes interesadas inspeccionan el resultado del Sprint y colaboran para decidir futuras adaptaciones.'],['Sprint Retrospective','El equipo reflexiona sobre su forma de trabajar y planifica mejoras para aumentar la calidad y la efectividad.']];
   const artifacts = [['Product Backlog','Lista emergente y ordenada de lo necesario para mejorar el producto.','Compromiso: Objetivo del Producto'],['Sprint Backlog','Objetivo del Sprint, elementos seleccionados y plan de los Developers para entregarlos.','Compromiso: Objetivo del Sprint'],['Incremento','Pieza concreta y utilizable hacia el Objetivo del Producto; se suma a incrementos anteriores.','Compromiso: Definición de Terminado']];
   const kanban = [['Por hacer',3,['Definir criterios','Preparar pruebas','Revisar accesibilidad']],['En curso',2,['Diseñar formulario','Validar mensajes']],['Terminado',3,['Acordar requisitos']]];
+  const taskInfo = {
+    'Definir criterios':'Acordar qué condiciones debe cumplir la tarea para considerarse lista.',
+    'Preparar pruebas':'Organizar casos y datos de prueba antes de validar el producto.',
+    'Revisar accesibilidad':'Comprobar navegación por teclado, foco y comprensión del contenido.',
+    'Diseñar formulario':'Definir campos, ayudas y mensajes para completar una tarea del usuario.',
+    'Validar mensajes':'Verificar que las confirmaciones y errores orienten a la persona usuaria.',
+    'Acordar requisitos':'Confirmar necesidades, alcance y criterios de aceptación con el cliente.'
+  };
   const kanbanPractices = [['Visualizar el trabajo','Mostrar el flujo y el estado de cada elemento en un tablero compartido.'],['Limitar el WIP','Limitar el trabajo en curso para evitar sobrecarga y favorecer la finalización.'],['Gestionar el flujo','Observar bloqueos y tiempos de entrega para mejorar el movimiento del trabajo.'],['Políticas explícitas','Acordar criterios de entrada, salida y tratamiento de los elementos.'],['Mejorar continuamente','Usar retroalimentación y experimentos para evolucionar el sistema de trabajo.'],['Terminar antes de empezar más','Priorizar la finalización del trabajo iniciado antes de sumar nuevas tareas.'],['Revisar el servicio','Acordar cuándo revisar el flujo y ajustar prioridades según lo que necesita el servicio.'],['Tablero y límites WIP','El tablero y los límites WIP hacen visible el sistema. No hay un conjunto de artefactos obligatorio equivalente al de Scrum.']];
   const kanbanRoles = [['Responsabilidades actuales','Kanban no prescribe cargos nuevos. El equipo puede conservar sus roles y acordar quién cuida cada parte del flujo.'],['Service Delivery Manager (opcional)','Ayuda a observar y mejorar el flujo de entrega, y a resolver bloqueos que afectan al servicio.'],['Service Request Manager (opcional)','Ayuda a ordenar las solicitudes y a mantener claros los criterios de entrada al sistema.']];
   const xpPractices = [['Cliente involucrado','Mantener un diálogo cercano con el cliente para priorizar, aclarar necesidades y validar entregas.'],['Programación en pareja','Dos personas colaboran en el mismo código: comparten decisiones y revisan el trabajo en el momento.'],['TDD','Escribir una prueba que falle, implementar lo necesario para que pase y refactorizar el código.'],['Integración continua','Integrar cambios pequeños con frecuencia y verificarlos mediante pruebas automatizadas.'],['Refactorización','Mejorar la estructura interna del código sin cambiar su comportamiento observable.'],['Entregas pequeñas','Publicar incrementos pequeños y frecuentes para obtener retroalimentación y reducir el riesgo.']];
@@ -52,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const step = event.target.closest('[data-go-stage]');
       if (step) selectStage(Number(step.dataset.goStage));
     });
+    selectStage(0);
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape' && detail.classList.contains('is-open')) {
         const index = Number(detail.dataset.stage);
@@ -83,10 +92,25 @@ document.addEventListener('DOMContentLoaded', () => {
     kanban.forEach(([, , tasks], columnIndex) => tasks.forEach(title => columns[columnIndex].tasks.push({ id: ++taskId, title })));
     let draggedTask = null;
     const countLabel = document.getElementById('kanbanCount');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Anima cada tarea desde su posición anterior para que no salte de columna.
+    const animateFrom = (previous) => {
+      if (reduceMotion) return;
+      board.querySelectorAll('[data-task-id]').forEach(task => {
+        const before = previous.get(task.dataset.taskId);
+        if (!before) return;
+        const after = task.getBoundingClientRect();
+        const dx = before.left - after.left;
+        const dy = before.top - after.top;
+        if (dx || dy) task.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }], { duration: 280, easing: 'cubic-bezier(.2,.8,.2,1)' });
+      });
+    };
     const renderBoard = () => {
-      board.innerHTML = columns.map((column, columnIndex) => `<section class="board-column" data-column="${columnIndex}" aria-label="${column.name}"><header>${column.name}<span>${column.tasks.length} / ${column.limit} elementos</span></header><div class="board-dropzone" data-drop-column="${columnIndex}" tabindex="0" aria-label="Columna ${column.name}; soltar tarea aquí">${column.tasks.map((task, taskIndex) => `<article class="kanban-task" id="task-${task.id}" draggable="true" tabindex="0" data-task-id="${task.id}" data-task-index="${taskIndex}" aria-label="${task.title}, ${column.name}. Usá las flechas izquierda y derecha para moverla"><small>ELEMENTO DE TRABAJO</small><span>${task.title}</span><div class="task-actions"><button type="button" data-move-task="${task.id}" data-direction="-1" aria-label="Mover ${task.title} a la columna anterior" ${columnIndex === 0 ? 'disabled' : ''}>←</button><button type="button" data-move-task="${task.id}" data-direction="1" aria-label="Mover ${task.title} a la columna siguiente" ${columnIndex === columns.length - 1 ? 'disabled' : ''}>→</button></div></article>`).join('')}</div></section>`).join('');
+      const previous = new Map([...board.querySelectorAll('[data-task-id]')].map(task => [task.dataset.taskId, task.getBoundingClientRect()]));
+      board.innerHTML = columns.map((column, columnIndex) => `<section class="board-column" data-column="${columnIndex}" aria-label="${column.name}"><header>${column.name}<span>${column.tasks.length} / ${column.limit} elementos</span></header><div class="board-dropzone" data-drop-column="${columnIndex}" tabindex="0" aria-label="Columna ${column.name}; soltar tarea aquí">${column.tasks.map((task, taskIndex) => `<article class="kanban-task" id="task-${task.id}" draggable="true" tabindex="0" data-task-id="${task.id}" data-task-index="${taskIndex}" aria-label="${task.title}, ${column.name}. ${taskInfo[task.title]} Usá las flechas izquierda y derecha para moverla"><small>ELEMENTO DE TRABAJO</small><span>${task.title}</span><p class="task-description">${taskInfo[task.title]}</p><div class="task-actions"><button type="button" data-move-task="${task.id}" data-direction="-1" aria-label="Mover ${task.title} a la columna anterior" ${columnIndex === 0 ? 'disabled' : ''}>←</button><button type="button" data-move-task="${task.id}" data-direction="1" aria-label="Mover ${task.title} a la columna siguiente" ${columnIndex === columns.length - 1 ? 'disabled' : ''}>→</button></div></article>`).join('')}</div></section>`).join('');
       countLabel.textContent = `${columns.reduce((total, column) => total + column.tasks.length, 0)} tareas en el tablero`;
       board.querySelectorAll('.board-column').forEach((element, index) => element.classList.toggle('is-over-limit', columns[index].tasks.length > columns[index].limit));
+      animateFrom(previous);
     };
     const moveTask = (id, direction) => {
       const fromIndex = columns.findIndex(column => column.tasks.some(task => task.id === id));
@@ -164,7 +188,42 @@ document.addEventListener('DOMContentLoaded', () => {
   renderPractices('kanbanPractices',kanbanPractices);renderPractices('xpPractices',xpPractices);
   const kanbanRolesGrid=document.getElementById('kanbanRoles');
   if(kanbanRolesGrid)kanbanRolesGrid.innerHTML=kanbanRoles.map(([name,desc])=>`<article class="role-card"><strong>${name}</strong><p>${desc}</p></article>`).join('');
-  const links=[...document.querySelectorAll('.contents-nav a')];
-  if('IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)links.forEach(link=>link.classList.toggle('is-active',link.hash===`#${entry.target.id}`))}),{rootMargin:'-15% 0px -70% 0px'});links.forEach(link=>{const section=document.querySelector(link.hash);if(section)observer.observe(section)})}
+  const methodPicker=document.getElementById('methodPicker');
+  if(methodPicker)methodPicker.addEventListener('submit',event=>{
+    event.preventDefault();
+    const answers=Object.fromEntries(new FormData(methodPicker));
+    let method='Scrum', explanation='Los cambios y las entregas frecuentes se pueden organizar en Sprints con objetivos claros.';
+    if(answers.flow==='yes'){method='Kanban';explanation='Un flujo continuo de solicitudes se beneficia de visualizar el trabajo y limitar las tareas en curso.'}
+    else if(answers.change==='no'&&answers.delivery==='no'){method='Cascada';explanation='Si el alcance está definido y no se requieren incrementos frecuentes, un plan secuencial puede ser adecuado.'}
+    else if(answers.delivery==='no'){method='Kanban';explanation='Visualizar el trabajo y mejorar el flujo permite entregar cuando cada elemento queda listo.'}
+    const result=document.getElementById('methodResult');
+    result.innerHTML=`<strong>Sugerencia inicial: ${method}</strong><span>${explanation} Revisá también las condiciones y necesidades de tu equipo antes de decidir.</span>`;
+    result.classList.add('has-result');
+  });
+  const compareOutput=document.getElementById('compareOutput');
+  if(compareOutput){
+    const comparison={
+      Scrum:{organizacion:'Trabajo organizado en Sprints de duración fija.',adaptacion:'Se inspecciona el avance y se adapta el plan durante cada Sprint.',entrega:'Incrementos utilizables; el equipo decide cuándo liberar.',roles:'Product Owner, Scrum Master y Developers.'},
+      Kanban:{organizacion:'Flujo visual con etapas y políticas definidas por el equipo.',adaptacion:'Mejora continua según demanda, bloqueos y datos del flujo.',entrega:'Entrega continua cuando los elementos están listos.',roles:'No prescribe roles específicos.'},
+      XP:{organizacion:'Ciclos breves guiados por historias y prácticas técnicas.',adaptacion:'Retroalimentación frecuente del cliente y pruebas continuas.',entrega:'Versiones pequeñas y frecuentes.',roles:'Colaboración cercana entre cliente y equipo técnico.'},
+      Cascada:{organizacion:'Fases secuenciales con planificación previa.',adaptacion:'Los cambios suelen evaluarse frente al alcance y plan acordados.',entrega:'Entrega principal al completar las fases previstas.',roles:'Responsabilidades definidas según el proyecto.'}
+    };
+    const status=document.getElementById('compareStatus');
+    const checks=[...document.querySelectorAll('.compare-options input[type="checkbox"]')];
+    const renderComparison=()=>{
+      const selected=checks.filter(input=>input.checked).map(input=>input.value);
+      if(selected.length<2){compareOutput.innerHTML='<p class="compare-empty">Elegí al menos dos metodologías para mostrar la comparación.</p>';status.textContent='Seleccioná una metodología más para completar la comparación.';return}
+      const rows=[['Organización del trabajo','organizacion'],['Adaptación','adaptacion'],['Entrega','entrega'],['Roles','roles']];
+      compareOutput.innerHTML=`<table class="compare-table"><caption>Comparación de ${selected.join(', ')}</caption><thead><tr><th scope="col">Aspecto</th>${selected.map(name=>`<th scope="col">${name}</th>`).join('')}</tr></thead><tbody>${rows.map(([label,key])=>`<tr><th scope="row">${label}</th>${selected.map(name=>`<td>${comparison[name][key]}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+      status.textContent=`Comparando ${selected.length} metodologías.`;
+    };
+    checks.forEach(input=>input.addEventListener('change',renderComparison));
+    renderComparison();
+  }
+  const links=[...document.querySelectorAll('.contents-nav a')].filter(link=>link.hash);
+  const contentsNav=document.querySelector('.contents-nav');
+  // En celular el índice es una tira horizontal: mantiene visible la sección activa.
+  const revealActiveLink=link=>{if(contentsNav&&contentsNav.scrollWidth>contentsNav.clientWidth)contentsNav.scrollTo({left:link.offsetLeft-(contentsNav.clientWidth-link.offsetWidth)/2})};
+  if('IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)links.forEach(link=>{const active=link.hash===`#${entry.target.id}`;link.classList.toggle('is-active',active);if(active)revealActiveLink(link)})}),{rootMargin:'-90px 0px -65% 0px'});links.forEach(link=>{const section=document.querySelector(link.hash);if(section)observer.observe(section)})}
 
 });

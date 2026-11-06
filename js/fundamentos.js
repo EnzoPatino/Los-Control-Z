@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Elementos de la Tarjeta en la Grilla ---
   const normCard = document.getElementById('normas');
-  const normSwitch = document.getElementById('normSwitch');
   const normTitle = document.getElementById('normTitle');
   const normDescription = document.getElementById('normDescription');
   const normHint = document.getElementById('normHint');
@@ -84,14 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Sincronizar tarjeta de la página principal
     if (normCard) {
       normCard.classList.toggle('is-25000', is25k);
-      if (normSwitch) {
-        normSwitch.setAttribute('aria-pressed', String(is25k));
-        normSwitch.setAttribute('aria-label', is25k ? 'Mostrar información de ISO 9126' : 'Mostrar información de ISO/IEC 25000');
-      }
       if (normBadge) normBadge.textContent = is25k ? '25000' : '9126';
       if (normTitle) normTitle.textContent = is25k ? 'ISO/IEC 25000 · SQuaRE' : 'ISO 9126 · modelo clásico';
       if (normDescription) normDescription.textContent = data.cardDesc;
-      if (normHint) normHint.textContent = is25k ? 'HACÉ CLIC PARA VER ISO 9126' : 'HACÉ CLIC PARA VER ISO/IEC 25000';
+      if (normHint) normHint.textContent = 'ABRIR COMPARATIVA →';
     }
 
     // 2. Sincronizar modal superpuesto
@@ -140,13 +135,22 @@ document.addEventListener('DOMContentLoaded', () => {
     renderIsoState(nextIso, true);
   }
 
+  // Mientras el modal está abierto, el resto de la página no recibe foco y no se corre.
+  function lockBackground(isLocked) {
+    document.body.style.paddingRight = isLocked ? `${window.innerWidth - document.documentElement.clientWidth}px` : '';
+    document.body.style.overflow = isLocked ? 'hidden' : '';
+    [...document.body.children].forEach(element => {
+      if (element !== spotlightBackdrop && element.tagName !== 'SCRIPT') element.inert = isLocked;
+    });
+  }
+
   // --- Apertura y Cierre del Spotlight Superpuesto ---
   function openSpotlight() {
     if (!spotlightBackdrop) return;
     spotlightBackdrop.hidden = false;
     spotlightBackdrop.classList.remove('is-closing');
     spotlightBackdrop.classList.add('is-active');
-    document.body.style.overflow = 'hidden';
+    lockBackground(true);
     renderIsoState(activeIso, false);
 
     setTimeout(() => {
@@ -160,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       spotlightBackdrop.classList.remove('is-active', 'is-closing');
       spotlightBackdrop.hidden = true;
-      document.body.style.overflow = '';
+      lockBackground(false);
       if (normCard) normCard.focus();
     }, 180);
   }
