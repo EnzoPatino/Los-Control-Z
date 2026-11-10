@@ -71,23 +71,50 @@ document.addEventListener('DOMContentLoaded', () => {
       'Incremento 3':'Cada incremento amplía el producto y conserva lo entregado antes.'
     }
   };
-  document.querySelectorAll('.model-section .diagram-open').forEach(button => {
-    const section = button.closest('.model-section');
-    const svgNode = button.querySelector('svg');
+  // Diagramas de las guías ágiles (US-09): misma interacción que los modelos tradicionales.
+  // Cada valor es la descripción, o [nombre visible, descripción] cuando la etiqueta del SVG está cortada.
+  const agileDescriptions = {
+    scrum: {
+      'Planning':'Al inicio del Sprint el equipo define el objetivo, elige elementos del Product Backlog y planifica cómo hacerlos.',
+      'Construcción':'Los Developers trabajan en el Incremento y refinan el backlog a medida que aprenden.',
+      'Daily Scrum':'Reunión diaria de 15 minutos para revisar el avance hacia el objetivo y ajustar el plan.',
+      'Review':'El equipo y las partes interesadas inspeccionan el Incremento y acuerdan próximos pasos.',
+      'Retrospective':'El equipo revisa cómo trabajó y acuerda mejoras para el siguiente Sprint, que vuelve a empezar con la Planning.'
+    },
+    kanban: {
+      'Solicitudes':'Entrada del trabajo: pedidos e ideas que todavía no se comprometieron.',
+      'Por hacer':'Trabajo priorizado y listo para empezar cuando haya capacidad disponible.',
+      'En curso':'Tareas en desarrollo. El límite de trabajo en curso (WIP) evita acumular tareas a medio hacer.',
+      'Revisión':'Se verifica la calidad antes de entregar: pruebas, revisión de código o validación.',
+      'Terminado':'Trabajo entregado que cumple las políticas acordadas por el equipo.'
+    },
+    xp: {
+      'Historias':'El cliente expresa necesidades como historias de usuario breves y priorizadas.',
+      'Planificar':'Se estiman las historias y se eligen las que entran en la próxima entrega corta.',
+      'Programar +':['Programar y probar','Se programa en pareja y con pruebas automatizadas escritas antes o junto al código.'],
+      'Integrar':'Los cambios se integran varias veces al día y se ejecutan todas las pruebas (integración continua).',
+      'Retroalimentar':'El cliente revisa lo entregado; sus comentarios generan nuevas historias y reinician el ciclo.'
+    }
+  };
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const num = (el, attr) => Number(el.getAttribute(attr) || 0);
+  const rectContains = (rect, x, y) => x >= num(rect, 'x') && x <= num(rect, 'x') + num(rect, 'width') && y >= num(rect, 'y') && y <= num(rect, 'y') + num(rect, 'height');
+
+  // Convierte un diagrama en interactivo: cada etapa muestra su descripción al pasar el cursor,
+  // tocarla o enfocarla con el teclado, y aparte queda el botón "Ampliar diagrama".
+  function makeDiagramInteractive(button, figure, descriptions) {
+    const svg = button.querySelector('svg');
     const wrapper = document.createElement('div');
     wrapper.className = 'diagram-open';
     wrapper.setAttribute('role', 'group');
     wrapper.setAttribute('aria-label', button.getAttribute('aria-label') || 'Diagrama interactivo');
-    wrapper.append(svgNode);
+    wrapper.append(svg);
     const zoom = document.createElement('button');
     zoom.type = 'button'; zoom.className = 'diagram-zoom'; zoom.textContent = 'Ampliar diagrama';
     zoom.setAttribute('aria-label', button.getAttribute('aria-label') || 'Ampliar diagrama');
     button.replaceWith(wrapper);
     wrapper.after(zoom);
-    const descriptions = modelDescriptions[section.id];
-    const svg = svgNode;
-    if (!descriptions || !svg) return;
-    const figure = section.querySelector('figure');
+    if (!descriptions || !svg || !figure) return;
     const info = document.createElement('p');
     info.className = 'diagram-stage-info';
     info.setAttribute('aria-live', 'polite');
@@ -96,9 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cada zona interactiva se crea en el mismo sistema de coordenadas que su figura:
     // los círculos del modelo iterativo están dentro de grupos con transform, así que
     // su zona se agrega a ese grupo y no a la raíz del SVG.
-    const SVG_NS = 'http://www.w3.org/2000/svg';
-    const num = (el, attr) => Number(el.getAttribute(attr) || 0);
-    const rectContains = (rect, x, y) => x >= num(rect, 'x') && x <= num(rect, 'x') + num(rect, 'width') && y >= num(rect, 'y') && y <= num(rect, 'y') + num(rect, 'height');
     const shapeFor = text => {
       const localCircle = text.parentNode.querySelector(':scope > circle');
       if (localCircle) return localCircle;
@@ -107,8 +131,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const targets = new Map();
     const labels = [...svg.querySelectorAll('text')];
-    Object.entries(descriptions).forEach(([label, description]) => {
-      const text = labels.find(item => item.textContent.trim() === label);
+    Object.entries(descriptions).forEach(([match, value]) => {
+      const [label, description] = Array.isArray(value) ? value : [match, value];
+      const text = labels.find(item => item.textContent.trim() === match);
       const shape = text && shapeFor(text);
       if (!shape) return;
       if (!targets.has(shape)) targets.set(shape, []);
@@ -122,12 +147,11 @@ document.addEventListener('DOMContentLoaded', () => {
       group.setAttribute('tabindex', '0');
       group.setAttribute('role', 'button');
       group.setAttribute('aria-label', `${label}. ${description}`);
-      group.dataset.label = label;
-      group.dataset.description = description;
-      const hit = document.createElementNS(SVG_NS, shape.tagName.toLowerCase());
-      const attrs = shape.tagName.toLowerCase() === 'circle' ? ['cx', 'cy', 'r'] : ['x', 'y', 'width', 'height', 'rx'];
+      const tag = shape.tagName.toLowerCase();
+      const hit = document.createElementNS(SVG_NS, tag);
+      const attrs = tag === 'circle' ? ['cx', 'cy', 'r'] : ['x', 'y', 'width', 'height', 'rx'];
       attrs.forEach(attr => { if (shape.hasAttribute(attr)) hit.setAttribute(attr, shape.getAttribute(attr)); });
-      if (hit.tagName.toLowerCase() === 'circle') hit.setAttribute('r', String(num(shape, 'r') + 6));
+      if (tag === 'circle') hit.setAttribute('r', String(num(shape, 'r') + 6));
       hit.setAttribute('fill', 'transparent');
       hit.setAttribute('stroke', 'transparent');
       hit.setAttribute('stroke-width', '4');
@@ -135,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title.textContent = `${label}: ${description}`;
       group.append(hit, title);
       // Los círculos van en su grupo transformado; los rectángulos, en la raíz para quedar sobre el texto.
-      (hit.tagName.toLowerCase() === 'circle' ? shape.parentNode : svg).append(group);
+      (tag === 'circle' ? shape.parentNode : svg).append(group);
       const show = () => {
         info.replaceChildren();
         const strong = document.createElement('strong');
@@ -150,6 +174,15 @@ document.addEventListener('DOMContentLoaded', () => {
       group.addEventListener('click', event => { event.stopPropagation(); show(); });
       group.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); show(); } });
     });
+  }
+
+  document.querySelectorAll('.model-section .diagram-open').forEach(button => {
+    const section = button.closest('.model-section');
+    makeDiagramInteractive(button, section.querySelector('figure'), modelDescriptions[section.id]);
+  });
+  document.querySelectorAll('.agile-section .agile-illustration .diagram-open').forEach(button => {
+    const section = button.closest('.agile-section');
+    makeDiagramInteractive(button, button.closest('.agile-illustration'), agileDescriptions[section.id]);
   });
   document.querySelectorAll('.diagram-open,.diagram-zoom').forEach(button => button.addEventListener('click', event => {
     if (!dialog || !content || event.target.closest('.diagram-stage-hit')) return;

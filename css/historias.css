@@ -31,7 +31,7 @@
 @keyframes backdrop-in{from{opacity:0}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){.tool-card:not([hidden]),.sprint-detail>*,.lightbox[open],.lightbox[open]::backdrop{animation:none}}
 .diagram-stage-info{min-height:35px;margin:8px 2px 0;padding:9px 12px;border-left:2px solid #8172f3;border-radius:0 5px 5px 0;background:#222543;color:#c4c7dd;font-size:10px;line-height:1.5;transition:background .18s ease}.diagram-stage-info strong{color:#fff;margin-right:5px}.diagram-stage-hit{cursor:pointer;pointer-events:all}.diagram-stage-hit:hover rect,.diagram-stage-hit:focus rect,.diagram-stage-hit:hover circle,.diagram-stage-hit:focus circle{stroke:#c0b8ff;stroke-width:4;fill:#8172f322;outline:none}.diagram-stage-hit:focus{outline:none}
-.model-section .diagram-open{cursor:default}.diagram-zoom{margin:7px 0 0;padding:6px 10px;border:1px solid #5e5991;border-radius:5px;background:#272544;color:#d8d5ff;font:9px var(--sans);cursor:pointer}.diagram-zoom:hover{background:#363165}.diagram-zoom:focus-visible{outline:3px solid #9288ff;outline-offset:3px}
+.model-section .diagram-open,.agile-illustration .diagram-open{cursor:default}.diagram-zoom{margin:7px 0 0;padding:6px 10px;border:1px solid #5e5991;border-radius:5px;background:#272544;color:#d8d5ff;font:9px var(--sans);cursor:pointer}.diagram-zoom:hover{background:#363165}.diagram-zoom:focus-visible{outline:3px solid #9288ff;outline-offset:3px}
 .diagram-stage-hit.is-active rect,.diagram-stage-hit.is-active circle{stroke:#c0b8ff;stroke-width:4;fill:#8172f322}
 .diagram-stage-info{font-size:13px}
 @media(hover:none){.diagram-stage-hit{-webkit-tap-highlight-color:transparent}}
@@ -40,3 +40,6 @@
 /* Botón de cierre de la ampliación: la X se dibuja con dos trazos centrados geométricamente,
    así no depende de la métrica del carácter "×" de cada tipografía (US-07 / US-09). */
 .lightbox-close{position:relative;display:grid;place-items:center;padding:0;font-size:0;line-height:0;color:transparent}.lightbox-close::before,.lightbox-close::after{content:"";position:absolute;top:50%;left:50%;width:14px;height:2px;border-radius:1px;background:#fff;transform:translate(-50%,-50%) rotate(45deg)}.lightbox-close::after{transform:translate(-50%,-50%) rotate(-45deg)}.lightbox-close:hover{background:#363165}
+/* Diagramas ágiles interactivos en pantallas angostas: solo el dibujo se desplaza de lado;
+   la descripción de la etapa y el botón de ampliar quedan fijos debajo. */
+@media(max-width:620px){.agile-illustration{overflow-x:visible}.agile-illustration .diagram-open{overflow-x:auto;-webkit-overflow-scrolling:touch}}
