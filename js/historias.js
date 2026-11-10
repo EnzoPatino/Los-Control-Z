@@ -91,54 +91,64 @@ document.addEventListener('DOMContentLoaded', () => {
     const info = document.createElement('p');
     info.className = 'diagram-stage-info';
     info.setAttribute('aria-live', 'polite');
-    info.textContent = 'Pasá el cursor por una etapa para conocer su propósito.';
+    info.textContent = 'Pasá el cursor o tocá una etapa para conocer su propósito.';
     figure.append(info);
+    // Cada zona interactiva se crea en el mismo sistema de coordenadas que su figura:
+    // los círculos del modelo iterativo están dentro de grupos con transform, así que
+    // su zona se agrega a ese grupo y no a la raíz del SVG.
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    const num = (el, attr) => Number(el.getAttribute(attr) || 0);
+    const rectContains = (rect, x, y) => x >= num(rect, 'x') && x <= num(rect, 'x') + num(rect, 'width') && y >= num(rect, 'y') && y <= num(rect, 'y') + num(rect, 'height');
+    const shapeFor = text => {
+      const localCircle = text.parentNode.querySelector(':scope > circle');
+      if (localCircle) return localCircle;
+      const x = num(text, 'x'); const y = num(text, 'y');
+      return [...svg.querySelectorAll('rect')].find(rect => rectContains(rect, x, y)) || null;
+    };
+    const targets = new Map();
     const labels = [...svg.querySelectorAll('text')];
-    const rects = [...svg.querySelectorAll('rect')];
-    const circles = [...svg.querySelectorAll('circle')];
-    Object.entries(descriptions).forEach(([label, description], index) => {
+    Object.entries(descriptions).forEach(([label, description]) => {
       const text = labels.find(item => item.textContent.trim() === label);
-      if (!text) return;
-      let box;
-      try { box = text.getBBox(); } catch { return; }
-      const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      const shape = text && shapeFor(text);
+      if (!shape) return;
+      if (!targets.has(shape)) targets.set(shape, []);
+      targets.get(shape).push({ label, description });
+    });
+    targets.forEach((entries, shape) => {
+      const label = entries.map(entry => entry.label).join(' · ');
+      const description = entries.map(entry => entry.description).join(' ');
+      const group = document.createElementNS(SVG_NS, 'g');
       group.setAttribute('class', 'diagram-stage-hit');
       group.setAttribute('tabindex', '0');
       group.setAttribute('role', 'button');
       group.setAttribute('aria-label', `${label}. ${description}`);
-      group.setAttribute('data-description', description);
-      group.setAttribute('data-label', label);
-      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-      const sourceRect = rects[index];
-      const sourceCircle = circles[index];
-      if (sourceCircle) {
-        const hitCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        ['cx','cy','r'].forEach(attr => hitCircle.setAttribute(attr, sourceCircle.getAttribute(attr)));
-        hitCircle.setAttribute('r', String(Number(sourceCircle.getAttribute('r')) + 6));
-        hitCircle.setAttribute('fill', 'transparent'); hitCircle.setAttribute('stroke', 'transparent'); hitCircle.setAttribute('stroke-width', '4');
-        const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-        title.textContent = `${label}: ${description}`;
-        group.append(hitCircle, title);
-      } else if (sourceRect) {
-        ['x','y','width','height','rx'].forEach(attr => { if (sourceRect.hasAttribute(attr)) rect.setAttribute(attr, sourceRect.getAttribute(attr)); });
-      } else {
-        rect.setAttribute('x', String(box.x - 24)); rect.setAttribute('y', String(box.y - 25));
-        rect.setAttribute('width', String(box.width + 48)); rect.setAttribute('height', String(box.height + 50));
-        rect.setAttribute('rx', '56');
-      }
-      if (!sourceCircle) {
-        rect.setAttribute('fill', 'transparent');
-        rect.setAttribute('stroke', 'transparent');
-        rect.setAttribute('stroke-width', '4');
-        const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-        title.textContent = `${label}: ${description}`;
-        group.append(rect, title);
-      }
-      svg.append(group);
-      const show = () => { info.innerHTML = `<strong>${label}</strong> ${description}`; info.classList.add('is-active'); };
+      group.dataset.label = label;
+      group.dataset.description = description;
+      const hit = document.createElementNS(SVG_NS, shape.tagName.toLowerCase());
+      const attrs = shape.tagName.toLowerCase() === 'circle' ? ['cx', 'cy', 'r'] : ['x', 'y', 'width', 'height', 'rx'];
+      attrs.forEach(attr => { if (shape.hasAttribute(attr)) hit.setAttribute(attr, shape.getAttribute(attr)); });
+      if (hit.tagName.toLowerCase() === 'circle') hit.setAttribute('r', String(num(shape, 'r') + 6));
+      hit.setAttribute('fill', 'transparent');
+      hit.setAttribute('stroke', 'transparent');
+      hit.setAttribute('stroke-width', '4');
+      const title = document.createElementNS(SVG_NS, 'title');
+      title.textContent = `${label}: ${description}`;
+      group.append(hit, title);
+      // Los círculos van en su grupo transformado; los rectángulos, en la raíz para quedar sobre el texto.
+      (hit.tagName.toLowerCase() === 'circle' ? shape.parentNode : svg).append(group);
+      const show = () => {
+        info.replaceChildren();
+        const strong = document.createElement('strong');
+        strong.textContent = label;
+        info.append(strong, ` ${description}`);
+        info.classList.add('is-active');
+        svg.querySelectorAll('.diagram-stage-hit.is-active').forEach(item => item.classList.remove('is-active'));
+        group.classList.add('is-active');
+      };
       group.addEventListener('pointerenter', show);
       group.addEventListener('focus', show);
       group.addEventListener('click', event => { event.stopPropagation(); show(); });
+      group.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); show(); } });
     });
   });
   document.querySelectorAll('.diagram-open,.diagram-zoom').forEach(button => button.addEventListener('click', event => {

@@ -46,3 +46,5 @@
 :root{interpolate-size:allow-keywords}
 details::details-content{block-size:0;overflow:clip;transition:block-size .24s ease,content-visibility .24s allow-discrete}
 details[open]::details-content{block-size:auto}
+/* Pantallas angostas (≤420px): los títulos grandes se escalan con el ancho para no desbordar. */
+@media(max-width:420px){.agile-intro{grid-template-columns:minmax(0,1fr)}.agile-intro>*{min-width:0}.agile-intro h1{font-size:clamp(38px,14vw,57px)}}

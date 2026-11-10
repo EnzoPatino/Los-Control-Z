@@ -15,29 +15,31 @@ Este mapa indica dónde empezar cada historia y cómo recorrer sus secciones. La
 | US-09 Gráficos ágiles | [`pages/metodologias-agiles.html`](../pages/metodologias-agiles.html#scrum) | Gráficos de ciclo Scrum, flujo Kanban y bucle XP; ampliación en lightbox. | Índice local → Scrum/Kanban/XP; abrir y cerrar cada diagrama. |
 | US-10 Scrum | [`pages/metodologias-agiles.html`](../pages/metodologias-agiles.html#scrum) | `#roles`, `#eventos`, cronograma `data-sprint-timeline`, `#artefactos`. | Entrar a Scrum y probar los cinco hitos del cronograma. |
 | US-11 Kanban | [`pages/metodologias-agiles.html`](../pages/metodologias-agiles.html#kanban) | `#kanban`, tablero `#kanbanBoard`, prácticas y responsabilidades. | Índice local → tablero → XP o selector. |
-| US-12 Selector de metodología | [`pages/metodologias-agiles.html`](../pages/metodologias-agiles.html#selector-metodologia) | `#selector-metodologia`, formulario `#methodPicker`, resultado `#methodResult`. | Contestar las tres preguntas; seguir recomendación a Scrum, Kanban o Cascada. |
-| US-13 Preguntas frecuentes | [`pages/metodologias-agiles.html`](../pages/metodologias-agiles.html#faq) | `#faq`, acordeón de cuatro preguntas. | Abrir/cerrar preguntas y continuar a recursos. |
-| US-14 Enlaces de interés | [`pages/metodologias-agiles.html`](../pages/metodologias-agiles.html#recursos) | `#recursos`, lista de recursos externos. | Desde FAQ; abrir recursos y volver a la guía. |
-| US-15 Comparador | [`pages/metodologias-agiles.html`](../pages/metodologias-agiles.html#comparador) | `#comparador`, casillas y tabla `#compareOutput`. | Elegir dos o más enfoques y comparar; reducir a uno para comprobar el estado informativo. |
+| US-12 Glosario | [`pages/recursos-aprendizaje.html`](../pages/recursos-aprendizaje.html#glosario) | `#glosario`: búsqueda `#glossarySearch`, filtros por tema y tarjetas desplegables con definición, ejemplo y enlace a la guía. | Menú → Recursos y Aprendizaje; buscar, filtrar y abrir términos. |
+| US-13 Preguntas frecuentes | [`pages/recursos-aprendizaje.html`](../pages/recursos-aprendizaje.html#faq) | `#faq`: reservada, sin interacción (programada para un sprint posterior). | Solo se muestra el aviso “Próximo sprint”. |
+| US-14 Enlaces de interés | [`pages/recursos-aprendizaje.html`](../pages/recursos-aprendizaje.html#enlaces) | `#enlaces`: reservada, sin interacción (programada para un sprint posterior). | Solo se muestra el aviso “Próximo sprint”. |
 | US-16 Sobre nosotros | [`pages/sobre-nosotros.html`](../pages/sobre-nosotros.html) | Presentación, equipo y propósito. | Desde menú o pie de página; volver al Inicio. |
+| US-18 Comparador | [`pages/comparador-metodologias.html`](../pages/comparador-metodologias.html) | Casillas `.compare-options` y tabla `#compareOutput`. | Elegir dos o más enfoques y comparar; volver a la guía ágil. |
+| US-19 Encuesta de preferencias | [`pages/metodologias-agiles.html`](../pages/metodologias-agiles.html#selector-metodologia) | `#selector-metodologia`, formulario `#methodPicker`, resultado `#methodResult`. | Contestar las tres preguntas; seguir recomendación a Scrum, Kanban o Cascada. |
 
 ## Navegación global
 
 - **Inicio (`index.html`)** ofrece tarjetas de entrada para Fundamentos, Ciclo de vida, Metodologías ágiles, Pruebas y herramientas y Modelos tradicionales.
 - **Menú principal** enlaza Inicio, Fundamentos, Ciclo de vida, Pruebas y herramientas, Modelos tradicionales, Metodologías ágiles, Recursos y Aprendizaje, Aplicación práctica, herramientas y soporte.
-- **Índice de Metodologías ágiles** enlaza a valores, principios, Scrum, roles, eventos, artefactos, Kanban, XP, selector, FAQ, enlaces y comparador.
+- **Índice de Metodologías ágiles** enlaza a valores, principios, Scrum, roles, eventos, artefactos, Kanban, XP, selector, glosario (en Recursos y Aprendizaje) y comparador.
+- **Índice de Recursos y Aprendizaje** enlaza a glosario, preguntas frecuentes y enlaces de interés.
 - **Índice de Modelos tradicionales** enlaza a los tres modelos.
 - **Pies de página** enlazan a la siguiente guía o a Sobre nosotros.
-- **Recomendación US-12** lleva a `#scrum`, `#kanban` o a `modelos-tradicionales.html#cascada`.
+- **Recomendación US-19** lleva a `#scrum`, `#kanban` o a `modelos-tradicionales.html#cascada`.
 
 ## Revisión visual y de interacción
 
-Las páginas de historias comparten tipografías, paleta oscura/violeta, tarjetas, botones y estilos responsive mediante `css/historias.css`, `css/guias.css` y `css/site-menu.css`. La entrada al desplazarse usa `css/scroll-reveal.css` y `js/scroll-reveal.js`; respeta `prefers-reduced-motion`. Los controles tienen estilos de foco visibles. Los diagramas usan una ampliación compartida, el acordeón FAQ usa `details/summary`, y el índice ágil marca la sección activa.
+Las páginas de historias comparten tipografías, paleta oscura/violeta, tarjetas, botones y estilos responsive mediante `css/historias.css`, `css/guias.css` y `css/site-menu.css`. La entrada al desplazarse usa `css/scroll-reveal.css` y `js/scroll-reveal.js`; respeta `prefers-reduced-motion`. Los controles tienen estilos de foco visibles. Los diagramas usan una ampliación compartida, el glosario usa botones con `aria-expanded`, y el índice ágil marca la sección activa.
 
-Al revisar o modificar enlaces, mantener estos identificadores: `niveles`, `herramientas`, `cascada`, `modelo-v`, `iterativo`, `valores`, `principios`, `scrum`, `roles`, `eventos`, `artefactos`, `kanban`, `xp`, `selector-metodologia`, `faq`, `recursos` y `comparador`.
+Al revisar o modificar enlaces, mantener estos identificadores: `niveles`, `herramientas`, `cascada`, `modelo-v`, `iterativo`, `valores`, `principios`, `scrum`, `roles`, `eventos`, `artefactos`, `kanban`, `xp`, `selector-metodologia`, `glosario`, `faq` y `enlaces`.
 
 ## Observaciones para cerrar con producto
 
-- US-12 todavía tiene DoD pendiente en `historias_de_usuario.md`; acordar reglas para respuestas mixtas y confirmar la experiencia paso a paso/progreso antes de darla por aceptada.
+- US-19 (encuesta) todavía tiene DoD pendiente en `historias_de_usuario.md`, donde figura con la numeración anterior (US-12); acordar reglas para respuestas mixtas y confirmar la experiencia paso a paso/progreso antes de darla por aceptada.
 - En Kanban, validar con producto si los nombres “En curso” y “Terminado” satisfacen la nomenclatura “En proceso” y “Hecho” indicada en US-11.
-- El destino de Recursos y Aprendizaje del menú global sigue siendo una página “En construcción”; los recursos de US-14 están dentro de la guía ágil y no son el mismo destino.
+- US-13 y US-14 están reservadas en Recursos y Aprendizaje para un sprint posterior; el menú las marca como “Pronto”.

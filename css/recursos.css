@@ -1,0 +1,30 @@
+/* Recursos y Aprendizaje · US-12 glosario interactivo, US-13/US-14 reservadas para un sprint posterior. */
+.glossary-tools{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+.glossary-search{display:grid;gap:6px;flex:1 1 240px;max-width:360px;color:#4b5670;font-size:11px;font-weight:700}
+.glossary-search input{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #d8dce7;border-radius:7px;background:#fff;color:#1e2945;font:14px var(--sans)}
+.glossary-search input:focus-visible{outline:3px solid #9288ff;outline-offset:1px;border-color:#6555df}
+.glossary-filters{display:flex;flex-wrap:wrap;gap:6px}
+.glossary-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;align-items:start}
+.glossary-card{background:#fff;border:1px solid #e6e9ee;border-radius:8px;transition:border-color .18s ease,box-shadow .18s ease}
+.glossary-card:hover,.glossary-card.is-open{border-color:#b5adf5;box-shadow:0 6px 18px #2b236b14}
+.glossary-toggle{display:grid;grid-template-columns:1fr auto;grid-template-areas:"topic icon" "term icon";gap:3px 10px;align-items:center;width:100%;padding:13px 15px;border:0;background:none;text-align:left;cursor:pointer;font:inherit}
+.glossary-toggle:focus-visible{outline:3px solid #9288ff;outline-offset:2px;border-radius:8px}
+.glossary-topic{grid-area:topic;color:#7770f7;font:600 9px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.glossary-toggle strong{grid-area:term;color:#39365e;font:500 16px var(--serif)}
+.glossary-icon{grid-area:icon;position:relative;width:24px;height:24px;border-radius:50%;background:#efeefe}
+.glossary-icon::before,.glossary-icon::after{content:"";position:absolute;top:50%;left:50%;width:10px;height:2px;border-radius:1px;background:#6555df;transform:translate(-50%,-50%);transition:transform .18s ease}
+.glossary-icon::after{transform:translate(-50%,-50%) rotate(90deg)}
+.glossary-card.is-open .glossary-icon::after{transform:translate(-50%,-50%) rotate(0)}
+.glossary-panel{padding:0 15px 14px}
+.glossary-definition{margin:0;color:#5f6a80;font-size:13px;line-height:1.55}
+.glossary-example{margin:8px 0 0;padding:8px 10px;border-left:2px solid #8172f3;border-radius:0 5px 5px 0;background:#f4f3ff;color:#5f6a80;font-size:12px;line-height:1.5}
+.glossary-example span{color:#39365e;font-weight:700}
+.glossary-link{display:inline-block;margin-top:9px;color:#4335d1;font-size:12px;font-weight:700}
+.glossary-link:hover{text-decoration:underline}
+.glossary-empty{margin:4px 0 0;padding:14px;border:1px dashed #cfd3e0;border-radius:8px;color:#778296;font-size:13px}
+#glossaryStatus{font-size:12px}
+.upcoming-card{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:16px;border:1px dashed #cfd3e0;border-radius:8px;background:#fafbfd}
+.upcoming-card p{margin:0;color:#778296;font-size:13px;line-height:1.5}
+.upcoming-badge{padding:4px 10px;border-radius:99px;background:#efeefe;color:#4335d1;font:600 10px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:620px){.glossary-cards{grid-template-columns:1fr}.glossary-search{max-width:none}.filter-button{min-height:40px;font-size:13px}}
+@media(prefers-reduced-motion:reduce){.glossary-card,.glossary-icon::before,.glossary-icon::after{transition:none}}

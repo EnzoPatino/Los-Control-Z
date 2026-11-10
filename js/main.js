@@ -14,7 +14,8 @@
     { label: 'Ciclo de vida', path: 'pages/ciclo-de-vida.html' },
     { label: 'Pruebas y herramientas', path: 'pages/calidad-pruebas.html' },
     { label: 'Modelos tradicionales', path: 'pages/modelos-tradicionales.html' },
-    { label: 'Metodologías ágiles', path: 'pages/metodologias-agiles.html' }
+    { label: 'Metodologías ágiles', path: 'pages/metodologias-agiles.html' },
+    { label: 'Recursos y Aprendizaje', path: 'pages/recursos-aprendizaje.html' }
   ];
 
   const MENU_GROUPS = [
@@ -23,7 +24,6 @@
       links: [
         { label: 'Inicio', path: 'index.html', number: '00' },
         ...GUIDES.map((guide, index) => ({ ...guide, number: `0${index + 1}` })),
-        { label: 'Recursos y Aprendizaje', path: placeholder('Recursos y Aprendizaje'), number: '06', soon: true },
         { label: 'Aplicación práctica', path: placeholder('Aplicación práctica'), number: '07', soon: true, featured: true }
       ]
     },
@@ -32,7 +32,7 @@
       links: [
         { label: 'Selector de metodología', path: 'pages/metodologias-agiles.html#selector-metodologia' },
         { label: 'Comparador de metodologías', path: 'pages/comparador-metodologias.html' },
-        { label: 'Enlaces de interés', path: 'pages/metodologias-agiles.html#recursos' },
+        { label: 'Enlaces de interés', path: 'pages/recursos-aprendizaje.html#enlaces', soon: true },
         { label: 'Calculadoras', path: placeholder('Calculadoras'), soon: true },
         { label: 'Plantillas', path: placeholder('Plantillas'), soon: true }
       ]
@@ -40,7 +40,7 @@
     {
       title: 'Soporte',
       links: [
-        { label: 'Preguntas frecuentes', path: 'pages/metodologias-agiles.html#faq' },
+        { label: 'Preguntas frecuentes', path: 'pages/recursos-aprendizaje.html#faq', soon: true },
         { label: 'Contacto', path: placeholder('Contacto'), soon: true },
         { label: 'Sobre nosotros', path: 'pages/sobre-nosotros.html' }
       ]
@@ -160,7 +160,11 @@
     function handleScroll() {
       // Se apoya sobre el pie de página para no tapar sus enlaces.
       const footerOverlap = footer ? window.innerHeight - footer.getBoundingClientRect().top : 0;
-      backToTop.style.bottom = `${Math.max(BACK_TO_TOP_MARGIN_PX, footerOverlap + BACK_TO_TOP_MARGIN_PX)}px`;
+      // Si el pie ocupa casi toda la ventana (celulares), subirlo lo sacaría de la pantalla o
+      // lo dejaría bajo el encabezado: en ese caso se queda en su lugar, sobre el pie.
+      const lifted = footerOverlap + BACK_TO_TOP_MARGIN_PX;
+      const fits = lifted <= window.innerHeight / 2;
+      backToTop.style.bottom = `${fits ? Math.max(BACK_TO_TOP_MARGIN_PX, lifted) : BACK_TO_TOP_MARGIN_PX}px`;
       siteHeader?.classList.toggle('scrolled', window.scrollY > 20);
       backToTop.classList.toggle('is-shown', window.scrollY > window.innerHeight * SHOW_BACK_TO_TOP_AFTER_SCREENS);
     }

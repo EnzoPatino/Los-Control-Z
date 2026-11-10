@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const checks=[...document.querySelectorAll('.compare-options input[type="checkbox"]')];
     const renderComparison=()=>{
       const selected=checks.filter(input=>input.checked).map(input=>input.value);
-      if(selected.length<2){compareOutput.innerHTML='<p class="compare-empty">Elegí al menos dos metodologías para mostrar la comparación.</p>';if(status)status.textContent='Seleccioná una metodología más para completar la comparación.';return}
+      if(selected.length<2){compareOutput.innerHTML='<p class="compare-empty">Elegí al menos dos metodologías para mostrar la comparación.</p>';if(status)status.textContent=selected.length===1?'Seleccioná una metodología más para completar la comparación.':'Seleccioná dos o más metodologías para ver la comparación.';return}
       const rows=[['Organización del trabajo','organizacion'],['Adaptación','adaptacion'],['Entrega','entrega'],['Roles','roles']];
       compareOutput.innerHTML=`<table class="compare-table"><caption>Comparación de ${selected.join(', ')}</caption><thead><tr><th scope="col">Aspecto</th>${selected.map(name=>`<th scope="col">${name}</th>`).join('')}</tr></thead><tbody>${rows.map(([label,key])=>`<tr><th scope="row">${label}</th>${selected.map(name=>`<td>${comparison[name][key]}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
       if(status)status.textContent=`Comparando ${selected.length} metodologías.`;

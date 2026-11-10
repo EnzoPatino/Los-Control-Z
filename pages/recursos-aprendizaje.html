@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Glosario interactivo de conceptos clave de calidad, modelos y metodologías ágiles.">
+  <title>Recursos y Aprendizaje — Control Z</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/guias.css">
+  <link rel="stylesheet" href="../css/historias.css">
+  <link rel="stylesheet" href="../css/recursos.css">
+  <link rel="stylesheet" href="../css/site-menu.css">
+  <link rel="stylesheet" href="../css/scroll-reveal.css">
+</head>
+<body class="agile-page">
+  <header class="guide-header">
+    <a class="guide-brand" href="../index.html" aria-label="Control Z, inicio"><img class="brand-mark" src="../img/Los_Control_Z.png" alt=""><span><strong>CONTROL Z</strong><small>SISTEMA DE GESTIÓN Y CALIDAD DE SOFTWARE</small></span></a>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="siteMenu"><span class="menu-toggle-line"></span><span class="menu-toggle-line"></span><span class="menu-toggle-line"></span></button>
+  </header>
+  <main>
+    <section class="agile-hero guide-wrap" id="inicio">
+      <div class="breadcrumbs"><a href="../index.html">Inicio</a><span>/</span><span aria-current="page">Recursos y Aprendizaje</span></div>
+      <div class="agile-intro"><div><span class="micro-tag">US-12 · RECURSOS Y APRENDIZAJE</span><h1>Recursos y<br>aprendizaje</h1><p>Conceptos clave para leer con más claridad las guías de calidad, modelos tradicionales y metodologías ágiles.</p><div class="pills"><span>Glosario</span><span>Preguntas frecuentes</span><span>Enlaces</span></div></div></div>
+    </section>
+    <div class="agile-layout guide-wrap">
+      <nav class="contents-nav" aria-label="Contenido de la sección"><small>EN ESTA SECCIÓN</small><a class="is-active" href="#glosario">Glosario</a><a href="#faq">Preguntas frecuentes</a><a href="#enlaces">Enlaces de interés</a></nav>
+      <div class="agile-content">
+        <section class="agile-section" id="glosario">
+          <div class="agile-heading"><span>01</span><div><small class="micro-tag">US-12 · GLOSARIO</small><h2>Glosario de conceptos clave</h2><p>Buscá un término o filtrá por tema. Seleccioná una tarjeta para ver su definición y un ejemplo.</p></div></div>
+          <div class="glossary-tools">
+            <label class="glossary-search"><span>Buscar término</span><input type="search" id="glossarySearch" placeholder="Ej.: Sprint, WIP, incremento…" autocomplete="off"></label>
+            <div class="glossary-filters" role="group" aria-label="Filtrar por tema">
+              <button type="button" class="filter-button is-selected" data-glossary-filter="all" aria-pressed="true">Todos</button>
+              <button type="button" class="filter-button" data-glossary-filter="calidad" aria-pressed="false">Calidad</button>
+              <button type="button" class="filter-button" data-glossary-filter="modelos" aria-pressed="false">Modelos</button>
+              <button type="button" class="filter-button" data-glossary-filter="agil" aria-pressed="false">Ágil</button>
+            </div>
+          </div>
+          <p class="filter-status" id="glossaryStatus" aria-live="polite"></p>
+          <div class="glossary-cards" id="glossaryCards"></div>
+          <p class="glossary-empty" id="glossaryEmpty" hidden>No encontramos términos con esa búsqueda. Probá con otra palabra o elegí “Todos”.</p>
+        </section>
+        <section class="agile-section" id="faq">
+          <div class="agile-heading"><span>02</span><div><small class="micro-tag">US-13 · PREGUNTAS FRECUENTES</small><h2>Preguntas frecuentes</h2><p>Respuestas breves a las dudas más comunes sobre las guías.</p></div></div>
+          <div class="upcoming-card"><span class="upcoming-badge">Próximo sprint</span><p>Esta sección está planificada para un sprint posterior. Por ahora no tiene contenido interactivo.</p></div>
+        </section>
+        <section class="agile-section" id="enlaces">
+          <div class="agile-heading"><span>03</span><div><small class="micro-tag">US-14 · ENLACES DE INTERÉS</small><h2>Enlaces de interés</h2><p>Fuentes externas para profundizar en cada tema.</p></div></div>
+          <div class="upcoming-card"><span class="upcoming-badge">Próximo sprint</span><p>Esta sección está planificada para un sprint posterior. Por ahora no tiene contenido interactivo.</p></div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <footer class="guide-footer"><div><span>US-12 · Recursos y Aprendizaje</span><small>Glosario interactivo con búsqueda y filtros por tema.</small></div><strong>CONTROL Z</strong><a href="sobre-nosotros.html">Sobre nosotros</a></footer>
+  <script src="../js/guias.js"></script>
+  <script src="../js/recursos.js"></script>
+  <div class="menu-overlay" id="siteMenu" aria-hidden="true"></div>
+  <script src="../js/main.js"></script>
+  <script src="../js/scroll-reveal.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+# Material académico y de trabajo que no forma parte del sitio publicado
+docs/
+*.doc
+*.docx
+*.pdf
+*.md
+.vscode/
+.idea/

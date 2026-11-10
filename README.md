@@ -17,6 +17,15 @@ Abrí <http://localhost:8000> en el navegador. Para detener el servidor, presion
 
 También se puede abrir `index.html` directamente, aunque el servidor local ofrece una navegación más consistente entre páginas.
 
+## Deploy en Vercel
+
+El sitio es estático: Vercel lo sirve tal cual, sin paso de build.
+
+- **Desde el panel de Vercel:** importar el repositorio y elegir *Framework Preset: Other*, dejando vacíos *Build Command* y *Output Directory* (raíz del proyecto).
+- **Desde la terminal:** `vercel` para una vista previa y `vercel --prod` para producción.
+
+`vercel.json` agrega cabeceras de seguridad y caché para imágenes. `.vercelignore` excluye `docs/` y los documentos de trabajo, que no forman parte del sitio publicado. Las URLs distinguen mayúsculas (por ejemplo, `pages/Leyes-de-UX.html`).
+
 ## Secciones
 
 - **Inicio** (`index.html`): presentación del sitio y accesos principales.
@@ -25,11 +34,12 @@ También se puede abrir `index.html` directamente, aunque el servidor local ofre
 - **Ciclo de vida** (`pages/ciclo-de-vida.html`): seis etapas con contenido que se despliega al seleccionar cada una.
 - **Modelos tradicionales** (`pages/modelos-tradicionales.html`): cascada, modelo en V e iterativo e incremental, comparados con diagramas ampliables.
 - **Metodologías ágiles** (`pages/metodologias-agiles.html`): valores y principios ágiles, Scrum, Kanban y XP. Incluye diagramas, un cronograma interactivo de Sprint, un tablero Kanban y roles opcionales de Kanban.
+- **Recursos y Aprendizaje** (`pages/recursos-aprendizaje.html`): glosario interactivo (US-12) con búsqueda y filtros por tema. Preguntas frecuentes (US-13) y enlaces de interés (US-14) quedan reservados para un sprint posterior.
 - **Sobre nosotros** (`pages/sobre-nosotros.html`): integrantes, responsabilidades y propósito del equipo.
 - **En construcción** (`pages/en-construccion.html`): informa qué contenidos todavía no están desarrollados y permite regresar a la página desde la que se llegó.
 - **Leyes de UX** (`pages/Leyes-de-UX.html`): documentación de decisiones de diseño.
 
-Recursos, contacto, preguntas frecuentes, herramientas y aplicación práctica todavía se presentan como secciones en construcción.
+Contacto, preguntas frecuentes, enlaces de interés, calculadoras, plantillas y aplicación práctica todavía se presentan como secciones en construcción.
 
 ## Interacciones
 
